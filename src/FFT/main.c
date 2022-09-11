@@ -189,15 +189,16 @@ static struct option const long_opt[] =
 };
 
 static const char help_usage[] =
-	" FFT_PROG (0|1) preform a quick internal test for slot 0 or 1\n"
-	" FFT_PROG [<options>] --slot rm_slot --config filename --out filename --in filename\n"
-	"Options :\n"
+	" fft (0|1) preform a quick internal test for slot 0 or 1\n"
+	" fft [<options>] --slot rm_slot --config filename --out filename --in filename\n"
+	" Options :\n"
 	"  -h, --help\n"
-	"  -s, --slot rm_slot		Set slot to rm_slot: 0 or 1. Default 0\n"
-	"  -c, --config filename	Use config file\n"
-	"  -i, --in filename		Input file to the program\n"
-	"  -o, --out filename		Write output to file\n"
-	"Example : fft -s 0 -c config.bin -o output.bin -i input.bin\n\n";
+	"  -s, --slot rm_slot		Set slot to rm_slot: 0 or 1. (Optional) Default slot is 0 if this flag is not provided\n"
+	"  -c, --config filename	Use config file (Required)\n"
+	"  -i, --in filename		Input file to the program (Required)\n"
+	"  -o, --out filename		Write output to file (Required)\n"
+	" Example : \n"
+	"	fft -s 0 -c config.bin -o output.bin -i input.bin\n\n";
 
 void usage(const char *msg)
 {
@@ -211,8 +212,7 @@ int main(int argc, char *argv[])
 	char *in_file  = NULL;
 	char *out_file = NULL;
 
-	struct stat statbuf;
-	struct stat configbuf;
+	struct stat statbuf, configbuf;
 	
 	int slot = 0, infd = -1, outfd = -1, configfd = -1;
 	int rc, opt;
@@ -251,6 +251,16 @@ int main(int argc, char *argv[])
 	if(!out_file)
 		die("Missing output file. Use \"-h\" for usage and more information");
 	
+	configfd = open(config_file, O_RDONLY, 0);
+	if (configfd == -1)
+		die("open(%s)", config_file);
+	if (fstat(configfd, &configbuf))
+		die("fstat(%s)", config_file);
+	size_t config_len = configbuf.st_size;
+	if (config_len < 16)
+		die("Config file size is less than 16 bytes");
+	char *config_mm = (char *)mmap(NULL, config_len, PROT_READ, MAP_SHARED, configfd, 0);
+	
 	infd = open(in_file, O_RDONLY, 0);
 	if (infd == -1)
 		die("open(%s)", in_file);
@@ -258,17 +268,10 @@ int main(int argc, char *argv[])
 		die("fstat(%s)", in_file);
 	size_t in_len = statbuf.st_size;
 	if ((in_len < 16) || (in_len > (SIZE_IN_BYTES - RESULT_OFFSET_MEM)))
-	die("file size %lu is out of demo range [16, %u]", in_len,
+	die("Input file size %lu is out of demo range [16, %u]", in_len,
 		SIZE_IN_BYTES - RESULT_OFFSET_MEM);
 	char *in_mm = (char *)mmap(NULL, in_len, PROT_READ, MAP_SHARED, infd, 0);
 
-	configfd = open(config_file, O_RDONLY, 0);
-	if (configfd == -1)
-		die("open(%s)", config_file);
-	if (fstat(configfd, &configbuf))
-		die("fstat(%s)", config_file);
-	size_t config_len = configbuf.st_size;
-	char *config_mm = (char *)mmap(NULL, config_len, PROT_READ, MAP_SHARED, configfd, 0);
 
 	outfd = open(out_file, O_WRONLY | O_CREAT | O_TRUNC,
 			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
