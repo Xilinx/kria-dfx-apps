@@ -2,6 +2,7 @@
 
 static volatile uint8_t* RMCOMMBOX[] = {
 		NULL,
+		NULL
 };
 
 int configDMSlots(int slot, volatile uint8_t* RMComm){
