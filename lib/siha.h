@@ -19,16 +19,9 @@
 #define ACCELCONFIG_LEN 0x1000
 #define RMCOMMBOX_LEN 0x1000000
 
-#define UIO_SIHA_Manager "/dev/uio4"
-#define UIO_AccelConfig_SLOT0 "/dev/uio5"
-#define UIO_RMCommBox_SLOT0 "/dev/uio6"
-#define UIO_AccelConfig_SLOT1 "/dev/uio7"
-#define UIO_RMCommBox_SLOT1 "/dev/uio8"
-
 #define APCR       0x00
 #define GIER       0x04
 #define IIER       0x08
-#define IISR       0x0c
 #define ADDR_LOW   0x10
 #define ADDR_HIGH  0x14
 #define SIZE_LOW   0x1c
