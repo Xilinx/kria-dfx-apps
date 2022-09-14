@@ -18,8 +18,6 @@
 
 #define SIZE_IN_BYTES       0x40000
 
-//int dfx_cfg_load(char* packageName);
-//int load_accelerator(const char *accel_name);
 int InitializeMapRMs(int slot);
 int StartAccel(int slot);
 int FinaliseUnmapRMs(int slot);
@@ -28,7 +26,6 @@ int DataToAccel(int slot, uint64_t data, uint64_t size, uint8_t tid);
 int DataFromAccel(int slot, uint64_t data, uint64_t size);
 int DataToAccelDone(int slot);
 int DataFromAccelDone(int slot);
-//char * dfxmgr_uio_by_name(char *obuf, int slot, const char *name);
 
 uint32_t decryptedbuff[] = {
 	0x33221100, 0x77665544, 0xbbaa9988, 0xffeeddcc,
@@ -132,17 +129,14 @@ int main(int argc, char *argv[])
 	auto bo_a = xrt::bo(device, SIZE_IN_BYTES, 0);
 	uint32_t *vptr = (uint32_t *)bo_a.map<int*>();
 	mapBuffer(bo_a);
-//	char uio_path[64];
-//	char *get_accel_uio_by_name(int, const char *);
-//	dfxmgr_uio_by_name(uio_path,0,"SIHA");
 
 	// Write to the memory that was mapped, use devmem from the command line of Linux to verify it worked
-    std::memcpy(vptr, &decryptionkeybuff, sizeof(decryptionkeybuff));
-    std::memcpy(vptr+8, &encryptionkeybuff, sizeof(encryptionkeybuff));
-    std::memcpy(vptr+64, &encryptedbuff, sizeof(encryptedbuff));
-    std::memcpy(vptr+128, &decryptedbuff, sizeof(decryptedbuff));
+	std::memcpy(vptr, &decryptionkeybuff, sizeof(decryptionkeybuff));
+    	std::memcpy(vptr+8, &encryptionkeybuff, sizeof(encryptionkeybuff));
+    	std::memcpy(vptr+64, &encryptedbuff, sizeof(encryptedbuff));
+    	std::memcpy(vptr+128, &decryptedbuff, sizeof(decryptedbuff));
 
-	//Initialize AES128
+	//Initialize AES192
 	StartAccel(slot);
 	printf("- AES192 DECRYPTION -\n");
 	//Program key to Accelerator
