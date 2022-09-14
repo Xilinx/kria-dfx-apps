@@ -18,8 +18,6 @@
 
 #define SIZE_IN_BYTES       0x40000
 
-//int dfx_cfg_load(char* packageName);
-//int load_accelerator(const char *accel_name);
 int InitializeMapRMs(int slot);
 int FinaliseUnmapRMs(int slot);
 void mapBuffer(xrt::bo boa);
