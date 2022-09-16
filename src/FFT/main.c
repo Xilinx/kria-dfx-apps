@@ -75,11 +75,8 @@ int main(int argc, char *argv[])
 	auto bo_a = xrt::bo(device, SIZE_IN_BYTES, 0);
 	uint32_t *vptr = (uint32_t *)bo_a.map<int*>();
 	mapBuffer(bo_a);
-//	char uio_path[64];
-//	char *get_accel_uio_by_name(int, const char *);
-//	dfxmgr_uio_by_name(uio_path,0,"SIHA");
 
-    std::memcpy(vptr, &config, sizeof(config));
+    	std::memcpy(vptr, &config, sizeof(config));
    	for (int i=0;i<16384;i=i+4)
 	    std::memcpy(vptr+1024+i, &fft_data_in, sizeof(fft_data_in));
     
