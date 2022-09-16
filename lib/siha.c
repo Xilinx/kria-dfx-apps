@@ -1,3 +1,7 @@
+/*
+ * Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+ * SPDX-License-Identifier: MIT
+ */
 #include "siha.h"
 
 static volatile uint8_t* RMCOMMBOX[] = {
