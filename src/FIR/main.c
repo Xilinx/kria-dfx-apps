@@ -25,7 +25,6 @@ int DataToAccel(int slot, uint64_t data, uint64_t size, uint8_t tid);
 int DataFromAccel(int slot, uint64_t data, uint64_t size);
 int DataToAccelDone(int slot);
 int DataFromAccelDone(int slot);
-//char * dfxmgr_uio_by_name(char *obuf, int slot, const char *name);
 
 uint32_t config[] = {0x0000000c,0x0000000c,0x0000000c,0x0000000c};
 
@@ -75,13 +74,10 @@ int main(int argc, char *argv[])
 	auto bo_a = xrt::bo(device, SIZE_IN_BYTES, 0);
 	uint32_t *vptr = (uint32_t *)bo_a.map<int*>();
 	mapBuffer(bo_a);
-//	char uio_path[64];
-//	char *get_accel_uio_by_name(int, const char *);
-//	dfxmgr_uio_by_name(uio_path,0,"SIHA");
-    
+   
 	for (int i=0;i<40;i++)
 		vptr[i]= (uint16_t)reload[2*i] | reload[2*i+1]<<16;
-    std::memcpy(vptr+128, &config, sizeof(config));
+    	std::memcpy(vptr+128, &config, sizeof(config));
    	for (int i=0;i<16384;i=i+4)
 	    std::memcpy(vptr+256+i, &fir_data_in, sizeof(fir_data_in));
 
