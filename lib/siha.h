@@ -10,6 +10,7 @@
 #include <sys/mman.h>
 #include <string.h>
 #include <time.h>
+#include <limits.h>
 
 #include "experimental/xrt_bo.h"
 #include "experimental/xrt_device.h"
@@ -47,9 +48,9 @@ typedef struct{
 }RMs;
 
 RMs * m_rms;
-char SIHA_uio_path[64];
-char AccelConfig_uio_path[64];
-char rm_comm_box_uio_path[64];
+char SIHA_uio_path[NAME_MAX];
+char AccelConfig_uio_path[NAME_MAX];
+char rm_comm_box_uio_path[NAME_MAX];
 
 uint64_t m_addr;
 
