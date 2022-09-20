@@ -1,3 +1,6 @@
+# Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: MIT
+
 P= /group/siv2/work/saikira/0905/cortexa72-cortexa53
 LIB_DFX=  -ldfx-mgr -L $P/dfx-mgr/usr/lib -ldfx -L $P/libdfx/usr/lib
 LIB= -lrt -luuid -lxrt_coreutil
