@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
    	for (int i=0;i<SIXTEEN_KB;i=i+4)
 	    std::memcpy(vptr+ONE_KB+i, &fft_data_in, sizeof(fft_data_in));
     
-	printf("FFT TEST :\n");
+	printf("FFT TEST on Slot %d:\n",slot);
 	//Configure FFT Ch0
 	//Arguments: (int slot, uint64_t offset, uint64_t size, uint8_t tid)
 	DataToAccel(slot,CONFIG_OFFSET_MEM,CONFIG_SIZE,TID_1);
