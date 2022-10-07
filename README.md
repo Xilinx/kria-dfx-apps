@@ -1,17 +1,28 @@
 # kria-dfx-apps
+# Prerequisite for native compilation
+- Program classic-22.04-kr06 image from Ubuntu on the sd-card
+- sudo snap install xlnx-config --classic --channel=2.x
+- sudo xlnx-config.sysinit
+- <Reboot>
+- sudo apt install xrt-dkms
+- Updated /etc/apt/sources.list with limerick-updates link
+- Add PPA Public Key. This only needs to be done once with a new SD card image.
+- apt update
+- apt upgrade
 
-## Pre-requisite to build apps
-
-- Source vitis 2022.1 tool settings
-
-- Clone the git repository to local sandbox.
+# Steps for Native compilation of apps on target
+```cpp
+apt install cmake                                             //Install cmake
+apt install uuid-dev libdfx-dev libdfx-mgr-dev                //Install necessary libraries
+git clone https://gitenterprise.xilinx.com/SOM/kria-dfx-apps  //Clone Application git
+cd kria-dfx-apps
+mkdir bld
+cd bld
+cmake ..
+cmake --build .
 ```
-git clone git@gitenterprise.xilinx.com:SOM/kria-dfx-apps.git kria_dfx_apps
-```
-
-Run "make all" after cloning the repository.
-```bash
-cd kria_dfx_apps
-make all
-```
-Generated Application files after compilation are copied to kria-dfx-apps directory. These need to be transferred to the target to test post loading the acclerators to RPs on the board.
+All four applications will be built at 
+kria-dfx-apps/bld/src/AES128/aes128
+kria-dfx-apps/bld/src/AES192/aes192
+kria-dfx-apps/bld/src/FFT/fft
+kria-dfx-apps/bld/src/FIR/fir
