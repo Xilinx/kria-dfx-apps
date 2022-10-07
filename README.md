@@ -42,6 +42,7 @@ sudo apt install xrt-dkms
 ```
 - Update /etc/apt/sources.list with limerick-updates. Add the below line to the sources.list file
 ```
+sudo vim /etc/apt/sources.list
 deb https://saikira:7k1ZTN6JvBL09jtDzwKp@private-ppa.launchpadcontent.net/limerick-team/limerick-updates/ubuntu jammy main
 ```
 - Add PPA Public Key by running the below command. This only needs to be done once with a new SD card image.
