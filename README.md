@@ -149,7 +149,7 @@ ubuntu@kria:~/kria-dfx-apps/bld$ sudo xmutil listapps
 ```
 - User can now run the application and test the accelerator functionality by running the application built in "Steps for Native compilation of applications on target" section.
 ```
-ubuntu@kria:~/kria-dfx-apps/bld$ sudo ./src/AES128/aes128
+ubuntu@kria:~/kria-dfx-apps/bld$ sudo ./src/AES128/aes128 0
 AES128 TEST on Slot 0:
 - AES128 DECRYPTION -
          Slot configured for DECRYPTION.
