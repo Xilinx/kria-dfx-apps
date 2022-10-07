@@ -85,7 +85,7 @@ cp -r usb/k26_2rp /lib/firmware/xilinx
 ```
 - SCP
 ```
-sudo scp -r saikira@172.23.81.238:/group/siv2/work/username/.../k26_2rp /lib/firmware/xilinx
+sudo scp -r username@172.23.81.238:<src_path>/k26_2rp /lib/firmware/xilinx
 ```
 
 2. Load accelerator and Run the Application
