@@ -2,7 +2,7 @@
 # Prerequisite for native compilation
 - Program classic-22.04-kr06 image from Ubuntu on the SD card: https://confluence.xilinx.com/display/MKTG/Ubuntu+22.04+Images+and+Collateral
   1. Download "iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img.xz" from the above link and decompress using "xz --decompress iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img.xz"
-  2. Program the iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img on SD Card using Balena Etcher Software.
+  2. Program the iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img on SD Card using Balena Etcher Software using steps similar to https://www.xilinx.com/products/som/kria/kv260-vision-starter-kit/kv260-getting-started-ubuntu/setting-up-the-sd-card-image.html
 ```
 sudo snap install xlnx-config --classic --channel=2.x
 sudo xlnx-config.sysinit
