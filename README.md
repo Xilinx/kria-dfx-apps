@@ -2,13 +2,17 @@
 Repository consists of applications to test the accelerators and Jupyter notebooks to test accelertor orchestration.
 
 # Prerequisite for native compilation
-- Program classic-22.04-kr06 image from Ubuntu on the SD card
+* Ethernet connection to the board.
+* Balena Etcher to flash Micro-SD card.
+
+## Steps
+* Program classic-22.04-kr06 image from Ubuntu on the SD card
   1. Download "iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img.xz" by clicking "Download 64-bit" button under "Ubuntu Desktop 22.04 LTS" from https://ubuntu.com/download/amd-xilinx 
   2. Decompress using "xz --decompress iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img.xz"
-  3. Program the iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img on SD Card using Balena Etcher Software using steps similar to https://www.xilinx.com/products/som/kria/kv260-vision-starter-kit/kv260-getting-started-ubuntu/setting-up-the-sd-card-image.html
+  3. Program the iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img on SD Card using Balena Etcher.  Steps for flashing the Micro-SD card can be found [here](https://www.xilinx.com/products/som/kria/kv260-vision-starter-kit/kv260-getting-started-ubuntu/setting-up-the-sd-card-image.html)
 
-Insert the Programmed SD Card in KV260/KR260 board and power ON the board.
-Connect to the board using serial terminal with baud rate:115200
+
+* Insert the Programmed SD Card in KV260/KR260 board and power ON the board. Connect to the serial output of the board with baud rate:115200
 
 Once linux boots up, use the below credentials to login and change password when prompted
 ```
@@ -34,29 +38,30 @@ sudo apt install cmake                                             //Install cma
 sudo apt install uuid-dev libdfx-dev libdfx-mgr-dev                //Install necessary libraries
 sudo git clone https://gitenterprise.xilinx.com/SOM/kria-dfx-apps  //Clone Application git
 cd kria-dfx-apps
-sudo mkdir bld_apps
-cd bld_apps
+sudo mkdir bld
+cd bld
 sudo cmake ..
 sudo cmake --build .
 
 All four applications will be built at 
-kria-dfx-apps/bld_apps/src/AES128/aes128
-kria-dfx-apps/bld_apps/src/AES192/aes192
-kria-dfx-apps/bld_apps/src/FFT/fft
-kria-dfx-apps/bld_apps/src/FIR/fir
+kria-dfx-apps/bld/src/AES128/aes128
+kria-dfx-apps/bld/src/AES192/aes192
+kria-dfx-apps/bld/src/FFT/fft
+kria-dfx-apps/bld/src/FIR/fir
 ```
 
 # Steps for running compiled applications on target
 1. Copy firmware to target with USB or SCP. 
 - USB
 ```
-sudo mkdir usb
-sudo mount /dev/sda1 usb
-sudo cp -r usb/k26_2rp /lib/firmware/xilinx
+sudo -s
+mkdir usb
+mount /dev/sda1 usb
+cp -r usb/k26_2rp /lib/firmware/xilinx
 ```
 - SCP
 ```
-sudo scp -r username@ip_address:/<src_path>/k26_2rp /lib/firmware/xilinx
+sudo scp -r saikira@172.23.81.238:/group/siv2/work/username/.../k26_2rp /lib/firmware/xilinx
 ```
 
 2. Load accelerator and Run the Application
