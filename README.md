@@ -1,14 +1,12 @@
 # kria-dfx-apps
 # Prerequisite for native compilation
-- Program classic-22.04-kr06 image from Ubuntu on the sd-card : https://confluence.xilinx.com/display/MKTG/Ubuntu+22.04+Images+and+Collateral
-   1. Copy iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img.xz from the above confluence page to a linux machine and decompress it using "xz --decompress iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img.xz"
-   2. Program the iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img file on sd card using Balena Etcher.
+- Program classic-22.04-kr06 image from Ubuntu on the SD card: https://confluence.xilinx.com/display/MKTG/Ubuntu+22.04+Images+and+Collateral
 - sudo snap install xlnx-config --classic --channel=2.x
 - sudo xlnx-config.sysinit
 - Reboot the board
 - sudo apt install xrt-dkms
 - Update /etc/apt/sources.list with limerick-updates link : https://confluence.xilinx.com/display/MKTG/Xilinx+Private+PPA+Access
-- Add PPA Public Key. This only needs to be done once with a new SD card image : https://confluence.xilinx.com/display/MKTG/Xilinx+Private+PPA+Access
+- Add PPA Public Key. This only needs to be done once with a new SD card image: https://confluence.xilinx.com/display/MKTG/Xilinx+Private+PPA+Access
 - sudo apt update
 - sudo apt upgrade
 
@@ -100,7 +98,7 @@ ubuntu@kria:~/kria-dfx-apps/bld$ sudo xmutil listapps
                              FFT         SIHA_PL_DFX                    k26_2rp_1003              PL_DFX               (2+0)                  -1
                 k26-starter-kits            XRT_FLAT                k26-starter-kits            XRT_FLAT               (0+0)                  -1
 ```
-- User can now run the application and test the accelerator funtionality by running the application built using Steps mentioned above in "Steps for Native compilation of applications on target" section
+- User can now run the application and test the accelerator functionality by running the application built in "Steps for Native compilation of applications on target" section.
 ```cpp
 ubuntu@kria:~/kria-dfx-apps/bld$ sudo ./src/AES128/aes128
 AES128 TEST on Slot 0:
@@ -113,8 +111,3 @@ AES128 TEST on Slot 0:
          AES128 ENCRYPTION done.
          Success: ENCRYPTED DATA MATCHED WITH REFERENCE DATA !
 ```
-
-
-
-
-
