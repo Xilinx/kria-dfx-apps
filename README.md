@@ -70,7 +70,7 @@ kria-dfx-apps/bld/src/FFT/fft
 kria-dfx-apps/bld/src/FIR/fir
 ```
 
-# Steps for running compiled applications on target
+# Setup for Jupyter Lab on target
 1. Copy firmware to target with USB or SCP. 
 - USB
 ```
@@ -161,7 +161,7 @@ AES128 TEST on Slot 0:
          Success: ENCRYPTED DATA MATCHED WITH REFERENCE DATA !
 ```
 
-# Steps for running Jupyter Notebooks
+# Setup Jupyter Lab on target
 - Install Jupyter
 ```
 ubuntu@kria:~$ sudo apt install jupyter
@@ -201,3 +201,4 @@ ubuntu@kria:~/kria-dfx-apps/notebook$ sudo jupyter-lab --no-browser --allow-root
 From the above output: Copy the http:// link that contains the returned ip address provided while invoking jupyter lab and run it in Browser to use the jupyter notebooks.
 Eg: http://10.140.38.140:8888/lab?token=60fc84050fe702904b8f434bef439c38c612af989513e6e8
 
+# Steps for running Jupyter Notebooks
