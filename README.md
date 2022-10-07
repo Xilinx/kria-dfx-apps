@@ -5,7 +5,7 @@
 - sudo xlnx-config.sysinit
 - Reboot the board
 - sudo apt install xrt-dkms
-- Updated /etc/apt/sources.list with limerick-updates link
+- Update /etc/apt/sources.list with limerick-updates link
 - Add PPA Public Key. This only needs to be done once with a new SD card image.
 - apt update
 - apt upgrade
