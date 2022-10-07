@@ -3,15 +3,18 @@
 - Program classic-22.04-kr06 image from Ubuntu on the SD card: https://confluence.xilinx.com/display/MKTG/Ubuntu+22.04+Images+and+Collateral
   1. Download "iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img.xz" from the above link abd decompress using "xz --decompress iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img.xz"
   2. Program the iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img on SD Card using Balena Etcher Software.
-- sudo snap install xlnx-config --classic --channel=2.x
-- sudo xlnx-config.sysinit
-- Reboot the board
-- sudo apt install xrt-dkms
+```
+sudo snap install xlnx-config --classic --channel=2.x
+sudo xlnx-config.sysinit
+sudo reboot
+sudo apt install xrt-dkms
+```
 - Update /etc/apt/sources.list with limerick-updates link : https://confluence.xilinx.com/display/MKTG/Xilinx+Private+PPA+Access
 - Add PPA Public Key. This only needs to be done once with a new SD card image: https://confluence.xilinx.com/display/MKTG/Xilinx+Private+PPA+Access
-- sudo apt update
-- sudo apt upgrade
-
+```
+sudo apt update
+sudo apt upgrade
+```
 # Steps for Native compilation of applications on target
 ```cpp
 sudo apt install cmake                                             //Install cmake
