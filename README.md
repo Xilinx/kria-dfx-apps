@@ -7,22 +7,48 @@
 - sudo apt install xrt-dkms
 - Update /etc/apt/sources.list with limerick-updates link
 - Add PPA Public Key. This only needs to be done once with a new SD card image.
-- apt update
-- apt upgrade
+- sudo apt update
+- sudo apt upgrade
 
-# Steps for Native compilation of apps on target
+# Steps for Native compilation of applications on target
 ```cpp
-apt install cmake                                             //Install cmake
-apt install uuid-dev libdfx-dev libdfx-mgr-dev                //Install necessary libraries
-git clone https://gitenterprise.xilinx.com/SOM/kria-dfx-apps  //Clone Application git
+sudo apt install cmake                                             //Install cmake
+sudo apt install uuid-dev libdfx-dev libdfx-mgr-dev                //Install necessary libraries
+sudo git clone https://gitenterprise.xilinx.com/SOM/kria-dfx-apps  //Clone Application git
 cd kria-dfx-apps
-mkdir bld
+sudo mkdir bld
 cd bld
-cmake ..
-cmake --build .
-```
+sudo cmake ..
+sudo cmake --build .
+
 All four applications will be built at 
 kria-dfx-apps/bld/src/AES128/aes128
 kria-dfx-apps/bld/src/AES192/aes192
 kria-dfx-apps/bld/src/FFT/fft
 kria-dfx-apps/bld/src/FIR/fir
+```
+
+# Steps for running compiled applications on target
+1. Copy firmware to target
+- USB
+- SCP
+  sudo scp -r saikira@172.23.81.238:/group/siv2/work/username/.../k26_2rp /lib/firmware/xilinx
+
+
+2. Load accelerator and Run the Application
+On boot, k26-starter-kits accelerator is loaded on slot 0 which can be verified by running "sudo xmutil listapps"
+![image](./media/listapps_default.png)
+User needs to unload the default app using "sudo xmutil unloadpp" to later load the accelerator that is intended to be used.
+![image](./media/unloadapp_listapps.png)
+User can now load the intended accelerator to be tested using "sudo xmutil loadapp"
+![image](./media/loadapp.png)
+Verify that the accelerator is loaded using "sudo xmutil listapps"
+![image](./media/listapps_AES.png)
+
+User can now run the application and test the accelerator funtionality by running the application built using Steps mentioned above in "Steps for Native compilation of applications on target" section
+![image](./media/RunningApplication.png)
+
+
+
+
+
