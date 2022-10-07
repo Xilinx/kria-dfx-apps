@@ -1,4 +1,6 @@
 # kria-dfx-apps
+Repository consists of applications to test the accelerators and Jupyter notebooks to test accelertor orchestration.
+
 # Prerequisite for native compilation
 - Program classic-22.04-kr06 image from Ubuntu on the SD card
   1. Download "iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img.xz" by clicking "Download 64-bit" button under "Ubuntu Desktop 22.04 LTS" from https://ubuntu.com/download/amd-xilinx 
@@ -51,7 +53,7 @@ sudo scp -r saikira@172.23.81.238:/group/siv2/work/username/.../k26_2rp /lib/fir
 
 2. Load accelerator and Run the Application
 - On boot, k26-starter-kits accelerator is loaded on slot 0 which can be verified by running "sudo xmutil listapps"
-```cpp
+```
 ubuntu@kria:~$ sudo xmutil listapps
                      Accelerator          Accel_type                            Base           Base_type      #slots(PL+AIE)         Active_slot
 
@@ -63,7 +65,7 @@ ubuntu@kria:~$ sudo xmutil listapps
 
 ```
 - User needs to unload the default app using "sudo xmutil unloadpp" to later load the accelerator that is intended to be used.
-```cpp
+```
 ubuntu@kria:~$ sudo xmutil unloadapp
 remove from slot 0 returns: 0 (Ok)
 ubuntu@kria:~$ sudo xmutil listapps
@@ -76,7 +78,7 @@ ubuntu@kria:~$ sudo xmutil listapps
                 k26-starter-kits            XRT_FLAT                k26-starter-kits            XRT_FLAT               (0+0)                  -1
 ```
 - User can now load the intended accelerator to be tested using "sudo xmutil loadapp"
-```cpp
+```
 ubuntu@kria:~$ sudo xmutil loadapp AES128
 [  146.337693] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/firmware-name
 [  146.347829] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/resets
@@ -102,7 +104,7 @@ ubuntu@kria:~$ sudo xmutil loadapp AES128
 AES128: loaded to slot 0
 ```
 - Verify that the accelerator is loaded using "sudo xmutil listapps"
-```cpp
+```
 ubuntu@kria:~/kria-dfx-apps/bld$ sudo xmutil listapps
                      Accelerator          Accel_type                            Base           Base_type      #slots(PL+AIE)         Active_slot
 
@@ -113,7 +115,7 @@ ubuntu@kria:~/kria-dfx-apps/bld$ sudo xmutil listapps
                 k26-starter-kits            XRT_FLAT                k26-starter-kits            XRT_FLAT               (0+0)                  -1
 ```
 - User can now run the application and test the accelerator functionality by running the application built in "Steps for Native compilation of applications on target" section.
-```cpp
+```
 ubuntu@kria:~/kria-dfx-apps/bld$ sudo ./src/AES128/aes128
 AES128 TEST on Slot 0:
 - AES128 DECRYPTION -
@@ -124,4 +126,15 @@ AES128 TEST on Slot 0:
          Slot configured for ENCRYPTION.
          AES128 ENCRYPTION done.
          Success: ENCRYPTED DATA MATCHED WITH REFERENCE DATA !
+```
+
+# Steps for running Jupyter Notebooks
+```
+sudo pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org jupyterlab
+sudo git clone https://gitenterprise.xilinx.com/SOM/kria-dfx-apps
+cd kria-dfx-apps/notebook
+sudo ifconfig
+sudo jupyter-lab --no-browser --allow-root --ip=99.999.99.999 --> Use ip addrress from the previous step
+
+copy the address returned and open in browser
 ```
