@@ -24,7 +24,7 @@ password: ubuntu
 ```
 sudo vi /etc/systemd/timesyncd.conf
 ```
-Update the line #NTP to NTP="ntp1 ntp2 ntp3 ntp.ubuntu.com"
+Update the line #NTP to NTP="ntp1 ntp2 ntp3 ntp.ubuntu.com". Save and exit.
 
 Run the following commands and check that system date is updated.
 ```
