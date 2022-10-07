@@ -53,6 +53,7 @@ kria-dfx-apps/bld/src/FIR/fir
 sudo -s
 mkdir usb
 mount /dev/sda1 usb
+cp -r /dev/sda1 /lib/firmware/xilinx
 ```
 - SCP
 ```
