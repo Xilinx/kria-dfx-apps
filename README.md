@@ -218,7 +218,7 @@ ubuntu@kria:~/kria-dfx-apps/notebook$ sudo jupyter-lab --no-browser --allow-root
         http://10.140.38.140:8888/lab?token=60fc84050fe702904b8f434bef439c38c612af989513e6e8
      or http://127.0.0.1:8888/lab?token=60fc84050fe702904b8f434bef439c38c612af989513e6e8
 ```
-From the above output: Copy the http:// link that contains the returned ip address provided while invoking jupyter lab and run it in Browser to use the jupyter notebooks.
+From the above output: Copy the http:// link that contains the ip address provided while invoking jupyter lab and run it in Browser to use the jupyter notebooks.
 Eg: http://10.140.38.140:8888/lab?token=60fc84050fe702904b8f434bef439c38c612af989513e6e8
 
 # Steps for running Jupyter Notebooks
