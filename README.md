@@ -15,7 +15,7 @@ Once linux boots up, use the below credentials to login and change password when
 username: ubuntu
 password: ubuntu
 ```
-update the kernel version using the below steps
+update the kernel version using the below steps. Board needs to be connected to internet for the following steps on this page.
 ```
 sudo snap install xlnx-config --classic --channel=2.x
 sudo xlnx-config.sysinit
