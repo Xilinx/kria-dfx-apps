@@ -14,18 +14,27 @@ Repository consists of applications to test the accelerators and Jupyter noteboo
 
 * Insert the Programmed SD Card in KV260/KR260 board, connect the ethernet cable to the board and power ON the board. Connect to the serial output of the board with baud rate set to 115200
 
-Once linux boots up, use the below credentials to login and change password when prompted
+* Once linux boots up, use the below credentials to login and change password when prompted
 ```
 username: ubuntu
 password: ubuntu
 ```
-Update the kernel version using the below steps.
+
+* Update the time settings.
 ```
 sudo vi /etc/systemd/timesyncd.conf
-Update this string ----> NTP="ntp1 ntp2 ntp3 ntp.ubuntu.com"
+```
+Update the line #NTP to NTP="ntp1 ntp2 ntp3 ntp.ubuntu.com"
+
+Run the following commands and check that system date is updated.
+```
 sudo systemctl stop systemd-timesyncd
 sudo systemctl start systemd-timesyncd
 date
+```
+
+Update the kernel version using the below steps.
+```
 sudo snap install xlnx-config --classic --channel=2.x
 sudo xlnx-config.sysinit
 sudo reboot
