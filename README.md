@@ -228,6 +228,9 @@ There are three example notebooks available
 3. AES-FIR-FFT -> need to load AES128 on slot 0 and FFT on slot 1 and switch AES128 with FIR
 
 Open the notebook of choice, you can find them on left side panel
+
 Open a new jupyterlab launcher and open teminal
+
 Unload and load firmware of your choice using the terminal
+
 Run the jupyter notebook after appropriately loading firmware
