@@ -162,12 +162,46 @@ AES128 TEST on Slot 0:
 ```
 
 # Steps for running Jupyter Notebooks
+- Install Jupyter
 ```
-sudo pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org jupyterlab
+ubuntu@kria:~$ sudo apt install jupyter
+```
+- Install Jupyter Lab
+```
+ubuntu@kria:~$ sudo pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org jupyterlab
+```
 sudo git clone https://gitenterprise.xilinx.com/SOM/kria-dfx-apps
 cd kria-dfx-apps/notebook
-sudo ifconfig
-sudo jupyter-lab --no-browser --allow-root --ip=99.999.99.999 --> Use ip addrress from the previous step
+ifconfig
+```
+- Launch Jupyter Lab
+```
+ubuntu@kria:~/kria-dfx-apps/notebook$ sudo jupyter-lab --no-browser --allow-root --ip=10.140.38.140  --> Use ip addrress from the previous step
 
-copy the address returned and open in browser
+[I 2022-10-07 11:33:42.380 ServerApp] jupyterlab | extension was successfully linked.
+[I 2022-10-07 11:33:42.438 ServerApp] nbclassic | extension was successfully linked.
+[I 2022-10-07 11:33:42.444 ServerApp] Writing Jupyter server cookie secret to /root/.local/share/jupyter/runtime/jupyter_cookie_secret
+[I 2022-10-07 11:33:44.064 ServerApp] notebook_shim | extension was successfully linked.
+[I 2022-10-07 11:33:44.152 ServerApp] notebook_shim | extension was successfully loaded.
+[I 2022-10-07 11:33:44.157 LabApp] JupyterLab extension loaded from /usr/local/lib/python3.10/dist-packages/jupyterlab
+[I 2022-10-07 11:33:44.158 LabApp] JupyterLab application directory is /usr/local/share/jupyter/lab
+[I 2022-10-07 11:33:44.176 ServerApp] jupyterlab | extension was successfully loaded.
+[I 2022-10-07 11:33:44.194 ServerApp] nbclassic | extension was successfully loaded.
+[I 2022-10-07 11:33:44.196 ServerApp] Serving notebooks from local directory: /home/ubuntu/kria-dfx-apps/notebook
+[I 2022-10-07 11:33:44.196 ServerApp] Jupyter Server 1.19.1 is running at:
+[I 2022-10-07 11:33:44.196 ServerApp] http://10.140.38.140:8888/lab?token=60fc84050fe702904b8f434bef439c38c612af989513e6e8
+[I 2022-10-07 11:33:44.196 ServerApp]  or http://127.0.0.1:8888/lab?token=60fc84050fe702904b8f434bef439c38c612af989513e6e8
+[I 2022-10-07 11:33:44.196 ServerApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 2022-10-07 11:33:44.212 ServerApp]
+
+    To access the server, open this file in a browser:
+        file:///root/.local/share/jupyter/runtime/jpserver-3769-open.html
+    Or copy and paste one of these URLs:
+        http://10.140.38.140:8888/lab?token=60fc84050fe702904b8f434bef439c38c612af989513e6e8
+     or http://127.0.0.1:8888/lab?token=60fc84050fe702904b8f434bef439c38c612af989513e6e8
+
+```
+From the above output: Copy the http:// link that contains the returned ip address provided while invoking jupyter lab and run it in Browser to use the jupyter notebooks.
+Eg: http://10.140.38.140:8888/lab?token=60fc84050fe702904b8f434bef439c38c612af989513e6e8
+
 ```
