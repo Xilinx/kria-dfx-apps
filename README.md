@@ -21,6 +21,11 @@ password: ubuntu
 ```
 Update the kernel version using the below steps.
 ```
+sudo vi /etc/systemd/timesyncd.conf
+Update this string ----> NTP="ntp1 ntp2 ntp3 ntp.ubuntu.com"
+sudo systemctl stop systemd-timesyncd
+sudo systemctl start systemd-timesyncd
+date
 sudo snap install xlnx-config --classic --channel=2.x
 sudo xlnx-config.sysinit
 sudo reboot
