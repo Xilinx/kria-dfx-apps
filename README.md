@@ -169,15 +169,13 @@ ubuntu@kria:~$ sudo apt install jupyter
 - Install Jupyter Lab
 ```
 ubuntu@kria:~$ sudo pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org jupyterlab
-```
-sudo git clone https://gitenterprise.xilinx.com/SOM/kria-dfx-apps
+ubuntu@kria:~$ sudo git clone https://gitenterprise.xilinx.com/SOM/kria-dfx-apps
 cd kria-dfx-apps/notebook
 ifconfig
 ```
 - Launch Jupyter Lab
 ```
 ubuntu@kria:~/kria-dfx-apps/notebook$ sudo jupyter-lab --no-browser --allow-root --ip=10.140.38.140  --> Use ip addrress from the previous step
-
 [I 2022-10-07 11:33:42.380 ServerApp] jupyterlab | extension was successfully linked.
 [I 2022-10-07 11:33:42.438 ServerApp] nbclassic | extension was successfully linked.
 [I 2022-10-07 11:33:42.444 ServerApp] Writing Jupyter server cookie secret to /root/.local/share/jupyter/runtime/jupyter_cookie_secret
@@ -199,9 +197,7 @@ ubuntu@kria:~/kria-dfx-apps/notebook$ sudo jupyter-lab --no-browser --allow-root
     Or copy and paste one of these URLs:
         http://10.140.38.140:8888/lab?token=60fc84050fe702904b8f434bef439c38c612af989513e6e8
      or http://127.0.0.1:8888/lab?token=60fc84050fe702904b8f434bef439c38c612af989513e6e8
-
 ```
 From the above output: Copy the http:// link that contains the returned ip address provided while invoking jupyter lab and run it in Browser to use the jupyter notebooks.
 Eg: http://10.140.38.140:8888/lab?token=60fc84050fe702904b8f434bef439c38c612af989513e6e8
 
-```
