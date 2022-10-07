@@ -29,11 +29,17 @@ kria-dfx-apps/bld/src/FIR/fir
 ```
 
 # Steps for running compiled applications on target
-1. Copy firmware to target
+1. Copy firmware to target with USB or SCP. 
 - USB
+```
+sudo -s
+mkdir usb
+mount /dev/sda1 usb
+```
 - SCP
-  sudo scp -r saikira@172.23.81.238:/group/siv2/work/username/.../k26_2rp /lib/firmware/xilinx
-
+```
+sudo scp -r saikira@172.23.81.238:/group/siv2/work/username/.../k26_2rp /lib/firmware/xilinx
+```
 
 2. Load accelerator and Run the Application
 - On boot, k26-starter-kits accelerator is loaded on slot 0 which can be verified by running "sudo xmutil listapps"
