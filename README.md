@@ -34,30 +34,29 @@ sudo apt install cmake                                             //Install cma
 sudo apt install uuid-dev libdfx-dev libdfx-mgr-dev                //Install necessary libraries
 sudo git clone https://gitenterprise.xilinx.com/SOM/kria-dfx-apps  //Clone Application git
 cd kria-dfx-apps
-sudo mkdir bld
-cd bld
+sudo mkdir bld_apps
+cd bld_apps
 sudo cmake ..
 sudo cmake --build .
 
 All four applications will be built at 
-kria-dfx-apps/bld/src/AES128/aes128
-kria-dfx-apps/bld/src/AES192/aes192
-kria-dfx-apps/bld/src/FFT/fft
-kria-dfx-apps/bld/src/FIR/fir
+kria-dfx-apps/bld_apps/src/AES128/aes128
+kria-dfx-apps/bld_apps/src/AES192/aes192
+kria-dfx-apps/bld_apps/src/FFT/fft
+kria-dfx-apps/bld_apps/src/FIR/fir
 ```
 
 # Steps for running compiled applications on target
 1. Copy firmware to target with USB or SCP. 
 - USB
 ```
-sudo -s
-mkdir usb
-mount /dev/sda1 usb
-cp -r usb/k26_2rp /lib/firmware/xilinx
+sudo mkdir usb
+sudo mount /dev/sda1 usb
+sudo cp -r usb/k26_2rp /lib/firmware/xilinx
 ```
 - SCP
 ```
-sudo scp -r saikira@172.23.81.238:/group/siv2/work/username/.../k26_2rp /lib/firmware/xilinx
+sudo scp -r username@ip_address:/<src_path>/k26_2rp /lib/firmware/xilinx
 ```
 
 2. Load accelerator and Run the Application
