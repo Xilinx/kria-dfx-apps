@@ -12,14 +12,14 @@ Repository consists of applications to test the accelerators and Jupyter noteboo
   3. Program the iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img on SD Card using Balena Etcher.  Steps for flashing the Micro-SD card can be found [here](https://www.xilinx.com/products/som/kria/kv260-vision-starter-kit/kv260-getting-started-ubuntu/setting-up-the-sd-card-image.html)
 
 
-* Insert the Programmed SD Card in KV260/KR260 board and power ON the board. Connect to the serial output of the board with baud rate:115200
+* Insert the Programmed SD Card in KV260/KR260 board, connect the ethernet cable to the board and power ON the board. Connect to the serial output of the board with baud rate set to 115200
 
 Once linux boots up, use the below credentials to login and change password when prompted
 ```
 username: ubuntu
 password: ubuntu
 ```
-update the kernel version using the below steps. Board needs to be connected to internet for the following steps on this page.
+Update the kernel version using the below steps.
 ```
 sudo snap install xlnx-config --classic --channel=2.x
 sudo xlnx-config.sysinit
