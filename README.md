@@ -1,6 +1,8 @@
 # kria-dfx-apps
 # Prerequisite for native compilation
 - Program classic-22.04-kr06 image from Ubuntu on the sd-card : https://confluence.xilinx.com/display/MKTG/Ubuntu+22.04+Images+and+Collateral
+   1. Copy iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img.xz from the above confluence page to a linux machine and decompress it using "xz --decompress iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img.xz"
+   2. Program the iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img file on sd card using Balena Etcher.
 - sudo snap install xlnx-config --classic --channel=2.x
 - sudo xlnx-config.sysinit
 - Reboot the board
