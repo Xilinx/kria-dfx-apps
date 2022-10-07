@@ -160,6 +160,22 @@ AES128 TEST on Slot 0:
          AES128 ENCRYPTION done.
          Success: ENCRYPTED DATA MATCHED WITH REFERENCE DATA !
 ```
+To run the accelerator on Slot 1:
+```
+ubuntu@kria:~/kria-dfx-apps/bld$ sudo xmutil loadapp AES192
+```
+```
+ubuntu@kria:~/kria-dfx-apps/bld$ sudo ./src/AES192/aes192 1 
+AES192 TEST on Slot 1:
+- AES192 DECRYPTION -
+         Slot configured for DECRYPTION.
+         AES192 DECRYPTION done.
+         Success: DECRYPTED DATA MATCHED WITH REFERENCE DATA !
+- AES192 ENCRYPTION -
+         Slot configured for ENCRYPTION.
+         AES192 ENCRYPTION done.
+         Success: ENCRYPTED DATA MATCHED WITH REFERENCE DATA !
+```
 
 # Setup Jupyter Lab on target
 - Install Jupyter
