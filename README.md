@@ -3,7 +3,7 @@
 - Program classic-22.04-kr06 image from Ubuntu on the sd-card
 - sudo snap install xlnx-config --classic --channel=2.x
 - sudo xlnx-config.sysinit
-- <Reboot>
+- Reboot the board
 - sudo apt install xrt-dkms
 - Updated /etc/apt/sources.list with limerick-updates link
 - Add PPA Public Key. This only needs to be done once with a new SD card image.
