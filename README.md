@@ -74,7 +74,7 @@ kria-dfx-apps/bld/src/FFT/fft
 kria-dfx-apps/bld/src/FIR/fir
 ```
 
-# Setup for Jupyter Lab on target
+# Steps for running compiled applications on target
 1. Copy firmware to target with USB or SCP. 
 - USB
 ```
