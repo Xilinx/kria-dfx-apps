@@ -222,3 +222,12 @@ From the above output: Copy the http:// link that contains the returned ip addre
 Eg: http://10.140.38.140:8888/lab?token=60fc84050fe702904b8f434bef439c38c612af989513e6e8
 
 # Steps for running Jupyter Notebooks
+There are three example notebooks available
+1. AES128 image encryption and decryption -> need to load AES128 on slot 0
+2. AES-FFT -> need to load AES128 on slot 0 and FFT on slot 1
+3. AES-FIR-FFT -> need to load AES128 on slot 0 and FFT on slot 1 and switch AES128 with FIR
+
+Open the notebook of choice, you can find them on left side panel
+Open a new jupyterlab launcher and open teminal
+Unload and load firmware of your choice using the terminal
+Run the jupyter notebook after appropriately loading firmware
