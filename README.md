@@ -92,7 +92,7 @@ ubuntu@kria:~$ sudo xmutil listapps
 
 * Clone the git repository kria-apps-firmware. This repository has pre-built firmware for DFX example design. Also, install bootgen on the target.
 ```
-git clone https://gitenterprise.xilinx.com/SOM/kria-apps-firmware.git
+sudo git clone https://gitenterprise.xilinx.com/SOM/kria-apps-firmware.git
 sudo apt install bootgen-xlnx
 ```
 
