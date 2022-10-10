@@ -298,7 +298,7 @@ Notebooks are available in the left side panel and there are five example notebo
       Unload any RMs present on slot 0 "xmutil unloadapp "
       Load AES128 RM on slot 0 "xmutil loadapp AES128"
    ```
-   Run cells in AES-FIR-FFT.ipynb till AES128 cell executes.
+   Run 1,2 and 3 cells in AES-FIR-FFT.ipynb to run AES128 application.
       ```
       Unload any RMs present on slot 0 "xmutil unloadapp "
       Load FIR RM on slot 0            "xmutil loadapp FIR"
