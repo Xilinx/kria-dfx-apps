@@ -287,13 +287,13 @@ There are five example notebooks available
       Unload any RMs present on slot 0 "xmutil unloadapp "
       Load AES128 RM on slot 0 "xmutil loadapp AES128"
    ```
-   Run till AES128 cell executes
+   Run cells in AES-FIR-FFT.ipynb till AES128 cell executes
       ```
       Unload any RMs present on slot 0 "xmutil unloadapp "
       Load FIR RM on slot 0            "xmutil loadapp FIR"
       Load FFT RM on slot 1            "xmutil loadapp FFT"
       ```
-      Run remaining cells
+      Run remaining cells in AES-FIR-FFT.ipynb
       
 5. AES_On_HW_vs_SW
 
