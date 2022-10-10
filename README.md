@@ -116,7 +116,8 @@ ubuntu@kria:~/kria-apps-firmware$ sudo xmutil listapps
 
 # Load accelerator and Run the Application
 
-* On boot, k26-starter-kits accelerator is loaded on slot 0. Unload the default app using "sudo xmutil unloadpp" to later load the desired DFX accelerator.
+* On boot, k26-starter-kits accelerator is loaded on slot 0. Unload the default app using "sudo xmutil unloadpp" to later load the desired DFX accelerator. 
+* By default, Running Loadapp first time will load the accelerator to slot 0 and running loadapp second time will load to slot 1. 
 ```
 ubuntu@kria:~/kria-apps-firmware$ sudo xmutil unloadapp
 remove from slot 0 returns: 0 (Ok)
