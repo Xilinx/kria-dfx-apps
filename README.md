@@ -76,7 +76,7 @@ kria-dfx-apps/bld/src/FIR/fir
 
 # Steps to install firmware on the target
 
-* Run xmutil listapps to look at the installed firmware on the target.
+* Run xmutil listapps to look at the installed firmware on the target. You will see the default k26-starter-kits firmware installed.
 ```
 ubuntu@kria:~$ sudo xmutil listapps
                 k26-starter-kits            XRT_FLAT                k26-starter-kits            XRT_FLAT               (0+0)                  0,
@@ -244,18 +244,18 @@ There are five example notebooks available
       Unload any RMs present on slot 0 "xmutil unloadapp "
       "xmutil loadapp AES128"
     ```      
-    Run all cells in AES128.ipynb
+    Run all cells
       
 2. AES192 image encryption and decryption
     Pre-requisite:
     ```
-    Need AES192 Rm to be loaded on Slot 0
+    Need AES192 Rm to be loaded on Slot 1
     On Linux terminal previously opened:
       "xmutil listapps" -> to check available RMs
-      Unload any RMs present on slot 0 "xmutil unloadapp"
+      Unload any RMs present on slot 1 "xmutil unloadapp 1"
       "xmutil loadapp AES192"
     ```
-    Run all cells in AES192.ipynb
+    Run all cells
       
 3. AES-FFT -> need to load AES128 on slot 0 and FFT on slot 1 ((xmutil loadapp AES128) and (xmutil loadapp FFT))
     Pre-requisite:
@@ -267,7 +267,7 @@ There are five example notebooks available
       "xmutil loadapp AES128"
       "xmutil loadapp FFT"
     ```
-    Run all cells in AES-FFT.ipynb
+    Run all cells
       
 4. AES-FIR-FFT -> need to load AES128 on slot 0 and FFT on slot 1 and switch AES128 with FIR
     Pre-requisite:
@@ -277,11 +277,10 @@ There are five example notebooks available
       "xmutil listapps" -> to check available RMs
       Unload any RMs present on slot 0 "xmutil unloadapp "
       "xmutil loadapp AES128"
-     Need FFT Rm to be loaded on Slot 1
       "xmutil loadapp FFT"
       Run until FFT does its job
       Unload any RMs present on slot 0 "xmutil unloadapp "
-     Need FIR Rm to be loaded on Slot 0
+      Load FIR on slot0
       "xmutil loadapp FIR"
     ```  
 5. AES_On_HW_vs_SW -> need to load AES128 on slot 0
@@ -298,4 +297,4 @@ There are five example notebooks available
       Unload any RMs present on slot 0 "xmutil unloadapp "
       "xmutil loadapp AES128"
     ```
-    Run all cells in AES_On_HW_vs_SW.ipynb
+    Run all cells
