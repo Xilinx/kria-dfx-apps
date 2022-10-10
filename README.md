@@ -10,7 +10,7 @@ Repository consists of applications to test the accelerators and Jupyter noteboo
   1. Download "iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img.xz" by clicking "Download 64-bit" button under "Ubuntu Desktop 22.04 LTS" from https://ubuntu.com/download/amd-xilinx.
   2. Decompress using following command
 ```
-xz --decompress iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img.xz".y
+xz --decompress iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img.xz
 ```
   3. Program the iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img on SD Card using Balena Etcher. Steps for flashing the Micro-SD card can be found [here](https://www.xilinx.com/products/som/kria/kv260-vision-starter-kit/kv260-getting-started-ubuntu/setting-up-the-sd-card-image.html)
 
