@@ -240,7 +240,7 @@ Eg: http://10.140.38.140:8888/lab?token=60fc84050fe702904b8f434bef439c38c612af98
 
 # Steps for running Jupyter Notebooks in browser
 
-Open a jupyter launcher(Ctrl+Shift+L) and open a terminal.
+Open a jupyter launcher(Ctrl+Shift+L). Go to file -> New and click on terminal.
 
 Notebooks are available in the left side panel and there are five example notebooks available.
 
