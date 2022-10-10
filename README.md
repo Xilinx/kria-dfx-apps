@@ -246,17 +246,17 @@ Notebooks are available in the left side panel and there are five example notebo
 
 1. AES128 image encryption and decryption-
 
-   Open AES128.ipynb. Go to run and click on Run All Cells.
+   Open AES128.ipynb. 
 
     Pre-requisite:
     ```
     Need AES128 RM to be loaded on Slot 0
     On Linux terminal previously opened:
       "xmutil listapps" -> to check available RMs
-      Unload any RMs present on slot 0  "xmutil unloadapp "
-      Load AES128 RM on slot 0          "xmutil loadapp AES128"
+      Unload any RM present on slot 0  "xmutil unloadapp "
+      Load AES128 RM on slot 0         "xmutil loadapp AES128"
     ```      
-    
+   Go to run and click on Run All Cells.
       
 2. AES192 image encryption and decryption-
 
@@ -271,7 +271,6 @@ Notebooks are available in the left side panel and there are five example notebo
       Load AES192 RM on slot 0          "xmutil loadapp AES192"
     ```
  
-      
 3. AES-FFT
 
     Open AES-FFT.ipynb and run all cells.
@@ -286,6 +285,7 @@ Notebooks are available in the left side panel and there are five example notebo
       Load AES128 RM on slot 0          "xmutil loadapp AES128"
       Load FFT RM on slot 1             "xmutil loadapp FFT"
      ```
+     
 4. AES-FIR-FFT
     
     Open AES-FIR-FFT.ipynb and run all cells.
@@ -305,7 +305,7 @@ Notebooks are available in the left side panel and there are five example notebo
       Unload any RMs present on slot 1 "xmutil unloadapp 1"
       Load FFT RM on slot 1            "xmutil loadapp FFT"
       ```
-   Run remaining cells in AES-FIR-FFT.ipynb
+   Run remaining cells in AES-FIR-FFT.ipynb.
       
 5. AES_On_HW_vs_SW
 
