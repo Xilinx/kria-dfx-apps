@@ -237,34 +237,41 @@ Open a jupyter launcher (big plus symbol on left panel) and open a terminal
 There are five example notebooks available
 1. AES128 image encryption and decryption 
     Pre-requisite:
+    ```
     Need AES128 Rm to be loaded on Slot 0
     On Linux terminal previously opened:
       "xmutil listapps" -> to check available RMs
       Unload any RMs present on slot 0 "xmutil unloadapp "
       "xmutil loadapp AES128"
+    ```      
     Run all cells
       
 2. AES192 image encryption and decryption
     Pre-requisite:
+    ```
     Need AES192 Rm to be loaded on Slot 1
     On Linux terminal previously opened:
       "xmutil listapps" -> to check available RMs
       Unload any RMs present on slot 1 "xmutil unloadapp 1"
       "xmutil loadapp AES192"
+    ```
     Run all cells
       
 3. AES-FFT -> need to load AES128 on slot 0 and FFT on slot 1 ((xmutil loadapp AES128) and (xmutil loadapp FFT))
     Pre-requisite:
+    ```
     Need AES128 Rm to be loaded on Slot 0
     On Linux terminal previously opened:
       "xmutil listapps" -> to check available RMs
       Unload any RMs present on slot 0 "xmutil unloadapp "
       "xmutil loadapp AES128"
       "xmutil loadapp FFT"
+    ```
     Run all cells
       
 4. AES-FIR-FFT -> need to load AES128 on slot 0 and FFT on slot 1 and switch AES128 with FIR
     Pre-requisite:
+    ```
     Need AES128 Rm to be loaded on Slot 0
     On Linux terminal previously opened:
       "xmutil listapps" -> to check available RMs
@@ -275,7 +282,7 @@ There are five example notebooks available
       Unload any RMs present on slot 0 "xmutil unloadapp "
       Load FIR on slot0
       "xmutil loadapp FIR"
-      
+    ```  
 5. AES_On_HW_vs_SW -> need to load AES128 on slot 0
     AES_On_HW_vs_SW uses 'pycryptodome' python library
     Installation :
@@ -283,9 +290,11 @@ There are five example notebooks available
     ubuntu@kria:~$ sudo pip install pycryptodome
     ```
     Pre-requisite:
+    ```
     Need AES128 Rm to be loaded on Slot 0
     On Linux terminal previously opened:
       "xmutil listapps" -> to check available RMs
       Unload any RMs present on slot 0 "xmutil unloadapp "
       "xmutil loadapp AES128"
+    ```
     Run all cells
