@@ -239,13 +239,13 @@ Eg: http://10.140.38.140:8888/lab?token=60fc84050fe702904b8f434bef439c38c612af98
 
 # Steps for running Jupyter Notebooks in browser
 
-Open a jupyter launcher (Ctrl+Shift+L) and open a terminal
+Open a jupyter launcher(Ctrl+Shift+L) and open a terminal.
 
-Notebooks are available in the left side panel
+Notebooks are available in the left side panel and there are five example notebooks available.
 
-There are five example notebooks available
+1. AES128 image encryption and decryption-
 
-1. AES128 image encryption and decryption 
+   Open AES128.ipynb and run all cells.
 
     Pre-requisite:
     ```
@@ -255,9 +255,11 @@ There are five example notebooks available
       Unload any RMs present on slot 0  "xmutil unloadapp "
       Load AES128 RM on slot 0          "xmutil loadapp AES128"
     ```      
-    Run all cells in AES128.ipynb
+    
       
-2. AES192 image encryption and decryption
+2. AES192 image encryption and decryption-
+
+   Open AES192.ipynb and run all cells.
 
     Pre-requisite:
     ```
@@ -267,10 +269,12 @@ There are five example notebooks available
       Unload any RMs present on slot 0  "xmutil unloadapp "
       Load AES192 RM on slot 0          "xmutil loadapp AES192"
     ```
-    Run all cells in AES192.ipynb
+ 
       
 3. AES-FFT
 
+    Open AES-FFT.ipynb and run all cells.
+    
     Pre-requisite:
     ```
     Need AES128 RM to be loaded on Slot 0 and FFT RM on Slot 1
@@ -280,10 +284,10 @@ There are five example notebooks available
       Unload any RMs present on slot 1  "xmutil unloadapp 1"
       Load AES128 RM on slot 0          "xmutil loadapp AES128"
       Load FFT RM on slot 1             "xmutil loadapp FFT"
-    ```
-    Run all cells in AES-FFT.ipynb
-      
+     ```
 4. AES-FIR-FFT
+    
+    Open AES-FIR-FFT.ipynb and run all cells.
 
     Pre-requisite:
     ```
@@ -293,16 +297,18 @@ There are five example notebooks available
       Unload any RMs present on slot 0 "xmutil unloadapp "
       Load AES128 RM on slot 0 "xmutil loadapp AES128"
    ```
-   Run cells in AES-FIR-FFT.ipynb till AES128 cell executes
+   Run cells in AES-FIR-FFT.ipynb till AES128 cell executes.
       ```
       Unload any RMs present on slot 0 "xmutil unloadapp "
       Load FIR RM on slot 0            "xmutil loadapp FIR"
       Unload any RMs present on slot 1 "xmutil unloadapp 1"
       Load FFT RM on slot 1            "xmutil loadapp FFT"
       ```
-      Run remaining cells in AES-FIR-FFT.ipynb
+   Run remaining cells in AES-FIR-FFT.ipynb
       
 5. AES_On_HW_vs_SW
+
+    Open AES_On_HW_vs_SW.ipynb and run all cells. 
 
     Pre-requisite:
     
@@ -315,5 +321,4 @@ There are five example notebooks available
       "xmutil listapps" -> to check available RMs
       Unload any RMs present on slot 0  "xmutil unloadapp "
       Load AES128 RM on slot 0          "xmutil loadapp AES128"
-    ```
-    Run all cells in AES_On_HW_vs_SW.ipynb
+    ```  
