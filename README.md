@@ -103,7 +103,7 @@ sudo make -C k26-dfx/2rp_design/ install
 ```
 * Verify that firmware is installed on target by running xmutil listapps command. You should see the newly installed firmware with base_type PL_DFX.
 ```
-ubuntu@kria:~$ sudo xmutil listapps
+ubuntu@kria:~/kria-apps-firmware$ sudo xmutil listapps
                      Accelerator          Accel_type                            Base           Base_type      #slots(PL+AIE)         Active_slot
 
                           AES128         SIHA_PL_DFX                    k26_2rp_1003              PL_DFX               (2+0)                  -1
@@ -117,9 +117,9 @@ ubuntu@kria:~$ sudo xmutil listapps
 
 * On boot, k26-starter-kits accelerator is loaded on slot 0. Unload the default app using "sudo xmutil unloadpp" to later load the desired DFX accelerator.
 ```
-ubuntu@kria:~$ sudo xmutil unloadapp
+ubuntu@kria:~/kria-apps-firmware$ sudo xmutil unloadapp
 remove from slot 0 returns: 0 (Ok)
-ubuntu@kria:~$ sudo xmutil listapps
+ubuntu@kria:~/kria-apps-firmware$ sudo xmutil listapps
                      Accelerator          Accel_type                            Base           Base_type      #slots(PL+AIE)         Active_slot
 
                           AES128         SIHA_PL_DFX                    k26_2rp_1003              PL_DFX               (2+0)                  -1
@@ -130,7 +130,7 @@ ubuntu@kria:~$ sudo xmutil listapps
 ```
 - User can now load the intended accelerator to be tested using "sudo xmutil loadapp"
 ```
-ubuntu@kria:~$ sudo xmutil loadapp AES128
+ubuntu@kria:~/kria-apps-firmware$ sudo xmutil loadapp AES128
 [  146.337693] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/firmware-name
 [  146.347829] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/resets
 [  146.357800] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/overlay0
@@ -156,6 +156,7 @@ AES128: loaded to slot 0
 ```
 - Verify that the accelerator is loaded using "sudo xmutil listapps"
 ```
+ubuntu@kria:~/kria-dfx-apps-firmware$ cd ~/kria-dfx-apps/bld/
 ubuntu@kria:~/kria-dfx-apps/bld$ sudo xmutil listapps
                      Accelerator          Accel_type                            Base           Base_type      #slots(PL+AIE)         Active_slot
 
