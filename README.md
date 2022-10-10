@@ -198,10 +198,10 @@ ubuntu@kria:~$ sudo apt install jupyter
 ubuntu@kria:~$ sudo pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org jupyterlab
 ubuntu@kria:~$ sudo git clone https://gitenterprise.xilinx.com/SOM/kria-dfx-apps
 cd kria-dfx-apps/notebook
-ifconfig
 ```
 - Launch Jupyter Lab
 ```
+ubuntu@kria:~/kria-dfx-apps/notebook$ ifconfig
 ubuntu@kria:~/kria-dfx-apps/notebook$ sudo jupyter-lab --no-browser --allow-root --ip=10.140.38.140  --> Use ip addrress from the previous step
 [I 2022-10-07 11:33:42.380 ServerApp] jupyterlab | extension was successfully linked.
 [I 2022-10-07 11:33:42.438 ServerApp] nbclassic | extension was successfully linked.
