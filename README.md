@@ -74,7 +74,7 @@ kria-dfx-apps/bld/src/FFT/fft
 kria-dfx-apps/bld/src/FIR/fir
 ```
 
-# Steps for install firmware on the target
+# Steps to install firmware on the target
 
 * Run xmutil listapps to look at the installed firmware on the target.
 ```
