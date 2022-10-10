@@ -233,11 +233,12 @@ Eg: http://10.140.38.140:8888/lab?token=60fc84050fe702904b8f434bef439c38c612af98
 
 # Steps for running Jupyter Notebooks in browser
 
-Notebook are available in the left side panel
+Open a jupyter launcher (Ctrl+Shift+L) and open a terminal
 
-Open a jupyter launcher (big plus symbol on left panel) and open a terminal
+Notebooks are available in the left side panel
 
 There are five example notebooks available
+
 1. AES128 image encryption and decryption 
 
     Pre-requisite:
@@ -272,7 +273,7 @@ There are five example notebooks available
       Unload any RMs present on slot 0  "xmutil unloadapp "
       Unload any RMs present on slot 1  "xmutil unloadapp 1"
       Load AES128 RM on slot 0          "xmutil loadapp AES128"
-      Load FFT RM on slot 0             "xmutil loadapp FFT"
+      Load FFT RM on slot 1             "xmutil loadapp FFT"
     ```
     Run all cells in AES-FFT.ipynb
       
