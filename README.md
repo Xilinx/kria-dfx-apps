@@ -15,9 +15,9 @@ xz --decompress iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img.xz".y
   3. Program the iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img on SD Card using Balena Etcher. Steps for flashing the Micro-SD card can be found [here](https://www.xilinx.com/products/som/kria/kv260-vision-starter-kit/kv260-getting-started-ubuntu/setting-up-the-sd-card-image.html)
 
 
-* Insert the Programmed SD Card in KV260/KR260 board, connect the ethernet cable to the board and power ON the board. Connect to the serial output of the board with baud rate set to 115200
+* Insert the Programmed SD Card in KV260/KR260 board, connect the ethernet cable to the board and power ON the board. Connect to the serial output of the board with baud rate set to 115200.
 
-* Once linux boots up, use the below credentials to login and change password when prompted
+* Once linux boots up, use the below credentials to login and change password when prompted.
 ```
 username: ubuntu
 password: ubuntu
@@ -27,7 +27,7 @@ password: ubuntu
 ```
 sudo vi /etc/systemd/timesyncd.conf
 ```
-Update the line #NTP to NTP="ntp1 ntp2 ntp3 ntp.ubuntu.com". Save and exit.
+Update the line 16 #NTP to NTP="ntp1 ntp2 ntp3 ntp.ubuntu.com". Save and exit.
 
 Run the following commands and check that system date is updated.
 ```
