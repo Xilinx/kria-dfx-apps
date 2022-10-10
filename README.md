@@ -99,7 +99,7 @@ sudo apt install bootgen-xlnx
 * Navigate to kria-apps-firmware directory and run the make file. This installs the firmware on the target at the location /lib/firmware/xilinx.
 ```
 cd kria-apps-firmware
-git checkout dev-bash
+sudo git checkout dev-bash
 sudo make -C k26-dfx/2rp_design/ install
 ```
 * Verify that firmware is installed on target by running xmutil listapps command. You should see the newly installed firmware with base_type PL_DFX.
