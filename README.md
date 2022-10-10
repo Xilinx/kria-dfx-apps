@@ -230,9 +230,9 @@ Eg: http://10.140.38.140:8888/lab?token=60fc84050fe702904b8f434bef439c38c612af98
 
 # Steps for running Jupyter Notebooks
 There are five example notebooks available
-1. AES128 image encryption and decryption -> need to load AES128 on slot 0
-2. AES192 image encryption and decryption -> need to load AES192 on slot 1
-3. AES-FFT -> need to load AES128 on slot 0 and FFT on slot 1
+1. AES128 image encryption and decryption -> need to load AES128 on slot 0 (xmutil loadapp AES128)
+2. AES192 image encryption and decryption -> need to load AES192 on slot 1 (xmutil loadapp AES192)
+3. AES-FFT -> need to load AES128 on slot 0 and FFT on slot 1 ((xmutil loadapp AES128) and (xmutil loadapp FFT))
 4. AES-FIR-FFT -> need to load AES128 on slot 0 and FFT on slot 1 and switch AES128 with FIR
 5. AES_On_HW_vs_SW -> need to load AES128 on slot 0
 
