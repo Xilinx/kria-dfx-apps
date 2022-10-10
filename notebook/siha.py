@@ -2,6 +2,7 @@ from ctypes import *
 import ctypes
 import numpy as np
 import os
+import time
 
 libsiha = CDLL(os.getcwd()+"/lib/"+"libsiha.so")
 
@@ -55,6 +56,9 @@ class AcapdAccel:
         self.slot = slot
         self.accelName = accelName
         self.open = libsiha.InitializeMapRMs(self.slot)
+        self.inThroughput = 0
+        self.outThroughput = 0
+        self.timeTaken = 0
     
     def loadData(self, inbuff, offset):
         return libsiha.loadData(inbuff, offset, len(inbuff))
@@ -99,12 +103,29 @@ class AcapdAccel:
         offset*=4
         size//=4
         offset2*=4
+        start = time.time()
         libsiha.DataToAccel(self.slot,offset,size,tid)
         print("\t Configure Input data done.\n")
         libsiha.DataFromAccel(self.slot, offset2, size)
         status = libsiha.DataFromAccelDone(self.slot)
         if status :
             print("\t Received Data From Accel.\n")
+        stop = time.time()
+        size*=16
+        self.timeTaken = stop-start
+        self.inThroughput = size/(stop - start)
+        self.outThroughput = size/(stop - start)
 
     def close(self):
         return libsiha.FinaliseUnmapRMs(self.slot)
+    
+    def getTimeTaken(self):
+        return self.timeTaken
+    
+    def getInThroughput(self):
+        return 8*self.inThroughput/1000000000
+    
+    def getOutThroughput(self):
+        return 8*self.outThroughput/1000000000
+    
+    
