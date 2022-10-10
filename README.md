@@ -228,23 +228,64 @@ ubuntu@kria:~/kria-dfx-apps/notebook$ sudo jupyter-lab --no-browser --allow-root
 From the above output: Copy the http:// link that contains the ip address provided while invoking jupyter lab and run it in Browser to use the jupyter notebooks.
 Eg: http://10.140.38.140:8888/lab?token=60fc84050fe702904b8f434bef439c38c612af989513e6e8
 
-# Steps for running Jupyter Notebooks
+# Steps for running Jupyter Notebooks in browser
+
+Notebook are available in the left side panel
+
+Open a jupyter launcher (big plus symbol on left panel) and open a terminal
+
 There are five example notebooks available
-1. AES128 image encryption and decryption -> need to load AES128 on slot 0 (xmutil loadapp AES128)
-2. AES192 image encryption and decryption -> need to load AES192 on slot 1 (xmutil loadapp AES192)
+1. AES128 image encryption and decryption 
+    Pre-requisite:
+    Need AES128 Rm to be loaded on Slot 0
+    On Linux terminal previously opened:
+      "xmutil listapps" -> to check available RMs
+      Unload any RMs present on slot 0 "xmutil unloadapp "
+      "xmutil loadapp AES128"
+    Run all cells
+      
+2. AES192 image encryption and decryption
+    Pre-requisite:
+    Need AES192 Rm to be loaded on Slot 1
+    On Linux terminal previously opened:
+      "xmutil listapps" -> to check available RMs
+      Unload any RMs present on slot 1 "xmutil unloadapp 1"
+      "xmutil loadapp AES192"
+    Run all cells
+      
 3. AES-FFT -> need to load AES128 on slot 0 and FFT on slot 1 ((xmutil loadapp AES128) and (xmutil loadapp FFT))
+    Pre-requisite:
+    Need AES128 Rm to be loaded on Slot 0
+    On Linux terminal previously opened:
+      "xmutil listapps" -> to check available RMs
+      Unload any RMs present on slot 0 "xmutil unloadapp "
+      "xmutil loadapp AES128"
+      "xmutil loadapp FFT"
+    Run all cells
+      
 4. AES-FIR-FFT -> need to load AES128 on slot 0 and FFT on slot 1 and switch AES128 with FIR
+    Pre-requisite:
+    Need AES128 Rm to be loaded on Slot 0
+    On Linux terminal previously opened:
+      "xmutil listapps" -> to check available RMs
+      Unload any RMs present on slot 0 "xmutil unloadapp "
+      "xmutil loadapp AES128"
+      "xmutil loadapp FFT"
+      Run until FFT does its job
+      Unload any RMs present on slot 0 "xmutil unloadapp "
+      Load FIR on slot0
+      "xmutil loadapp FIR"
+      
 5. AES_On_HW_vs_SW -> need to load AES128 on slot 0
-
-AES_On_HW_vs_SW uses 'pycryptodome' python library
-Installation :
-```
-ubuntu@kria:~$ sudo pip install pycryptodome
-```
-Open the notebook of choice, you can find them on left side panel
-
-Open a new jupyterlab launcher and open teminal
-
-Unload and load firmware of your choice using the terminal
-
-Run the jupyter notebook after appropriately loading firmware
+    AES_On_HW_vs_SW uses 'pycryptodome' python library
+    Installation :
+    ```
+    ubuntu@kria:~$ sudo pip install pycryptodome
+    ```
+    Pre-requisite:
+    Need AES128 Rm to be loaded on Slot 0
+    On Linux terminal previously opened:
+      "xmutil listapps" -> to check available RMs
+      Unload any RMs present on slot 0 "xmutil unloadapp "
+      "xmutil loadapp AES128"
+    Run all cells
