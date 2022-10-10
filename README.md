@@ -229,11 +229,18 @@ From the above output: Copy the http:// link that contains the ip address provid
 Eg: http://10.140.38.140:8888/lab?token=60fc84050fe702904b8f434bef439c38c612af989513e6e8
 
 # Steps for running Jupyter Notebooks
-There are three example notebooks available
+There are five example notebooks available
 1. AES128 image encryption and decryption -> need to load AES128 on slot 0
-2. AES-FFT -> need to load AES128 on slot 0 and FFT on slot 1
-3. AES-FIR-FFT -> need to load AES128 on slot 0 and FFT on slot 1 and switch AES128 with FIR
+2. AES192 image encryption and decryption -> need to load AES192 on slot 1
+3. AES-FFT -> need to load AES128 on slot 0 and FFT on slot 1
+4. AES-FIR-FFT -> need to load AES128 on slot 0 and FFT on slot 1 and switch AES128 with FIR
+5. AES_On_HW_vs_SW -> need to load AES128 on slot 0
 
+AES_On_HW_vs_SW uses 'pycryptodome' python library
+Installation :
+```
+ubuntu@kria:~$ sudo pip install pycryptodome
+```
 Open the notebook of choice, you can find them on left side panel
 
 Open a new jupyterlab launcher and open teminal
