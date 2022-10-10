@@ -291,6 +291,7 @@ There are five example notebooks available
       ```
       Unload any RMs present on slot 0 "xmutil unloadapp "
       Load FIR RM on slot 0            "xmutil loadapp FIR"
+      Unload any RMs present on slot 1 "xmutil unloadapp 1"
       Load FFT RM on slot 1            "xmutil loadapp FFT"
       ```
       Run remaining cells in AES-FIR-FFT.ipynb
