@@ -8,11 +8,7 @@ Repository consists of applications to test the accelerators and Jupyter noteboo
 ## Steps
 * Program classic-22.04-kr06 image from Ubuntu on the SD card
   1. Download "iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img.xz" by clicking "Download 64-bit" button under "Ubuntu Desktop 22.04 LTS" from https://ubuntu.com/download/amd-xilinx.
-  2. Decompress using following command
-```
-xz --decompress iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img.xz
-```
-  3. Program the iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img on SD Card using Balena Etcher. Steps for flashing the Micro-SD card can be found [here](https://www.xilinx.com/products/som/kria/kv260-vision-starter-kit/kv260-getting-started-ubuntu/setting-up-the-sd-card-image.html)
+  2. Program the iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img.xz on SD Card using Balena Etcher. Steps for flashing the Micro-SD card can be found [here](https://www.xilinx.com/products/som/kria/kv260-vision-starter-kit/kv260-getting-started-ubuntu/setting-up-the-sd-card-image.html)
 
 
 * Insert the Programmed SD Card in KV260/KR260 board, connect the ethernet cable to the board and power ON the board. Connect to the serial output of the board with baud rate set to 115200.
