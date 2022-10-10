@@ -85,6 +85,7 @@ kria-dfx-apps/bld/src/FIR/fir
 
 * Run xmutil listapps to look at the installed firmware on the target. You will see the default k26-starter-kits firmware installed.
 ```
+ubuntu@kria:~/kria-dfx-apps/bld$ cd ~
 ubuntu@kria:~$ sudo xmutil listapps
                 k26-starter-kits            XRT_FLAT                k26-starter-kits            XRT_FLAT               (0+0)                  0,
 ```
