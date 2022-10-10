@@ -74,22 +74,26 @@ kria-dfx-apps/bld/src/FFT/fft
 kria-dfx-apps/bld/src/FIR/fir
 ```
 
-# Steps for running compiled applications on target
-1. Copy firmware to target with USB or SCP. 
-- USB
+# Steps for install firmware on the target
+
+* Run xmutil listapps to look at the installed firmware on the target.
 ```
-sudo -s
-mkdir usb
-mount /dev/sda1 usb
-cp -r usb/k26_2rp /lib/firmware/xilinx
-```
-- SCP
-```
-sudo scp -r username@172.23.81.238:<src_path>/k26_2rp /lib/firmware/xilinx
+ubuntu@kria:~$ sudo xmutil listapps
+                k26-starter-kits            XRT_FLAT                k26-starter-kits            XRT_FLAT               (0+0)                  0,
 ```
 
-2. Load accelerator and Run the Application
-- On boot, k26-starter-kits accelerator is loaded on slot 0 which can be verified by running "sudo xmutil listapps"
+* Clone the git repository kria-apps-firmware. This repository has pre-built firmware for DFX example design.
+```
+git clone https://gitenterprise.xilinx.com/SOM/kria-apps-firmware.git
+```
+
+* Navigate to kria-apps-firmware directory and run the make file. This installs the firmware on the target at the location /lib/firmware/xilinx.
+```
+cd kria-apps-firmware
+git checkout dev-bash
+sudo make -C k26-dfx/2rp_design/ install
+```
+* Verify that firmware is installed on target by running xmutil listapps command. You should see the newly installed firmware with base_type PL_DFX.
 ```
 ubuntu@kria:~$ sudo xmutil listapps
                      Accelerator          Accel_type                            Base           Base_type      #slots(PL+AIE)         Active_slot
@@ -99,9 +103,11 @@ ubuntu@kria:~$ sudo xmutil listapps
                           AES192         SIHA_PL_DFX                    k26_2rp_1003              PL_DFX               (2+0)                  -1
                              FFT         SIHA_PL_DFX                    k26_2rp_1003              PL_DFX               (2+0)                  -1
                 k26-starter-kits            XRT_FLAT                k26-starter-kits            XRT_FLAT               (0+0)                  0,
-
 ```
-- User needs to unload the default app using "sudo xmutil unloadpp" to later load the accelerator that is intended to be used.
+
+# Load accelerator and Run the Application
+
+* On boot, k26-starter-kits accelerator is loaded on slot 0. Unload the default app using "sudo xmutil unloadpp" to later load the desired DFX accelerator.
 ```
 ubuntu@kria:~$ sudo xmutil unloadapp
 remove from slot 0 returns: 0 (Ok)
