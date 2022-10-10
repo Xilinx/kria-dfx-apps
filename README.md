@@ -236,65 +236,73 @@ Open a jupyter launcher (big plus symbol on left panel) and open a terminal
 
 There are five example notebooks available
 1. AES128 image encryption and decryption 
+
     Pre-requisite:
     ```
-    Need AES128 Rm to be loaded on Slot 0
+    Need AES128 RM to be loaded on Slot 0
     On Linux terminal previously opened:
       "xmutil listapps" -> to check available RMs
-      Unload any RMs present on slot 0 "xmutil unloadapp "
-      "xmutil loadapp AES128"
+      Unload any RMs present on slot 0  "xmutil unloadapp "
+      Load AES128 RM on slot 0          "xmutil loadapp AES128"
     ```      
-    Run all cells
+    Run all cells in AES128.ipynb
       
 2. AES192 image encryption and decryption
+
     Pre-requisite:
     ```
-    Need AES192 Rm to be loaded on Slot 1
+    Need AES192 RM to be loaded on Slot 0
     On Linux terminal previously opened:
       "xmutil listapps" -> to check available RMs
-      Unload any RMs present on slot 1 "xmutil unloadapp 1"
-      "xmutil loadapp AES192"
+      Unload any RMs present on slot 0  "xmutil unloadapp "
+      Load AES192 RM on slot 0          "xmutil loadapp AES192"
     ```
-    Run all cells
+    Run all cells in AES192.ipynb
       
-3. AES-FFT -> need to load AES128 on slot 0 and FFT on slot 1 ((xmutil loadapp AES128) and (xmutil loadapp FFT))
+3. AES-FFT
+
     Pre-requisite:
     ```
-    Need AES128 Rm to be loaded on Slot 0
+    Need AES128 RM to be loaded on Slot 0 and FFT RM on Slot 1
     On Linux terminal previously opened:
       "xmutil listapps" -> to check available RMs
-      Unload any RMs present on slot 0 "xmutil unloadapp "
-      "xmutil loadapp AES128"
-      "xmutil loadapp FFT"
+      Unload any RMs present on slot 0  "xmutil unloadapp "
+      Unload any RMs present on slot 1  "xmutil unloadapp 1"
+      Load AES128 RM on slot 0          "xmutil loadapp AES128"
+      Load FFT RM on slot 0             "xmutil loadapp FFT"
     ```
-    Run all cells
+    Run all cells in AES-FFT.ipynb
       
-4. AES-FIR-FFT -> need to load AES128 on slot 0 and FFT on slot 1 and switch AES128 with FIR
+4. AES-FIR-FFT
+
     Pre-requisite:
     ```
-    Need AES128 Rm to be loaded on Slot 0
+    Need AES128 RM to be loaded on Slot 0 until decryption is done
     On Linux terminal previously opened:
       "xmutil listapps" -> to check available RMs
       Unload any RMs present on slot 0 "xmutil unloadapp "
-      "xmutil loadapp AES128"
-      "xmutil loadapp FFT"
-      Run until FFT does its job
+      Load AES128 RM on slot 0 "xmutil loadapp AES128"
+   ```
+   Run till AES128 cell executes
+      ```
       Unload any RMs present on slot 0 "xmutil unloadapp "
-      Load FIR on slot0
-      "xmutil loadapp FIR"
-    ```  
-5. AES_On_HW_vs_SW -> need to load AES128 on slot 0
-    AES_On_HW_vs_SW uses 'pycryptodome' python library
-    Installation :
+      Load FIR RM on slot 0            "xmutil loadapp FIR"
+      Load FFT RM on slot 1            "xmutil loadapp FFT"
+      ```
+      Run remaining cells
+      
+5. AES_On_HW_vs_SW
+
+    Pre-requisite:
+    
+    AES_On_HW_vs_SW uses 'pycryptodome' python library. Installation :
     ```
     ubuntu@kria:~$ sudo pip install pycryptodome
-    ```
-    Pre-requisite:
-    ```
+
     Need AES128 Rm to be loaded on Slot 0
     On Linux terminal previously opened:
       "xmutil listapps" -> to check available RMs
-      Unload any RMs present on slot 0 "xmutil unloadapp "
-      "xmutil loadapp AES128"
+      Unload any RMs present on slot 0  "xmutil unloadapp "
+      Load AES128 RM on slot 0          "xmutil loadapp AES128"
     ```
-    Run all cells
+    Run all cells in AES_On_HW_vs_SW.ipynb
