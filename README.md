@@ -82,9 +82,10 @@ ubuntu@kria:~$ sudo xmutil listapps
                 k26-starter-kits            XRT_FLAT                k26-starter-kits            XRT_FLAT               (0+0)                  0,
 ```
 
-* Clone the git repository kria-apps-firmware. This repository has pre-built firmware for DFX example design.
+* Clone the git repository kria-apps-firmware. This repository has pre-built firmware for DFX example design. Also, install bootgen on the target.
 ```
 git clone https://gitenterprise.xilinx.com/SOM/kria-apps-firmware.git
+sudo apt install bootgen-xlnx
 ```
 
 * Navigate to kria-apps-firmware directory and run the make file. This installs the firmware on the target at the location /lib/firmware/xilinx.
