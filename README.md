@@ -246,7 +246,7 @@ Notebooks are available in the left side panel and there are five example notebo
 
 1. AES128 image encryption and decryption-
 
-   Open AES128.ipynb and run all cells.
+   Open AES128.ipynb. Go to run and click on Run All Cells.
 
     Pre-requisite:
     ```
