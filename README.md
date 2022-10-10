@@ -288,7 +288,7 @@ Notebooks are available in the left side panel and there are five example notebo
      
 4. AES-FIR-FFT
     
-    Open AES-FIR-FFT.ipynb and run all cells.
+    Open AES-FIR-FFT.ipynb. Use shift + enter to run individual cell.
 
     Pre-requisite:
     ```
