@@ -10,6 +10,8 @@
 #include <unistd.h>
 #include <sys/mman.h>
 #include <fcntl.h>
+#include <getopt.h>
+#include <sys/stat.h>
 
 // XRT includes
 #include "experimental/xrt_bo.h"
@@ -34,6 +36,11 @@
 #define TID_0				0x0		//TID 0
 #define TID_1				0x1		//TID 1
 
+#define die(fmt, args ...) do { fprintf(stderr, \
+	    "ERROR:%s():%u " fmt ": %s\n", \
+	    __func__, __LINE__, ##args, errno ? strerror(errno) : ""); \
+	    exit(EXIT_FAILURE); \
+	} while (0)
 
 int InitializeMapRMs(int slot);
 int StartAccel(int slot);
@@ -139,22 +146,12 @@ void isTestPassed(const char* testName,uint32_t *vptr)
 	return;
 }
 
-		
-int main(int argc, char *argv[])
+int
+internal_test(int slot)
 {
-	//Default slot Set to 0 unless plassed as an argument
-	int slot =0;
-	if(argc>1)
-	{
-		//Updating slot number provided as command line argument
-		slot = atoi (argv[1]);
-		if (slot != 1 && slot != 0)
-		{
-			printf("- Invalid slot number provided %s. Valid values : 0 or 1\n",argv[1]);
-			return 0;
-		}
-	}
-	
+	if (slot != 1 && slot != 0)
+		die("Invalid slot: %d - must be 0 or 1", slot);
+
 	//Initialize and memory map RMs
 	if(InitializeMapRMs(slot) == -1)
 	{
@@ -162,7 +159,6 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 
-	
 	//Allocate XRT buffer to be used for input and output of application
 	auto device = xrt::device(0);
 	auto bufferObject = xrt::bo(device, SIZE_IN_BYTES, 0);
@@ -225,4 +221,174 @@ int main(int argc, char *argv[])
 
 	return 0;
 
+}
+
+static struct option const long_opt[] =
+{
+	{ "help",             no_argument, NULL, 'h'},
+	{ "algorithm",  required_argument, NULL, 'a'},
+	{ "decrypt",          no_argument, NULL, 'd'},
+	{ "key",        required_argument, NULL, 'k'},
+	{ "out",        required_argument, NULL, 'o'},
+	{ "slot",       required_argument, NULL, 's'},
+	{ NULL, 0, NULL, 0}
+};
+
+static const char help_usage[] =
+  " AES_PROG (0|1)\n"
+  "   preform a quick internal test for slot 0 or 1\n\n"
+  " AES_PROG [<options>] --key passphrase --out out_file in_file\n"
+  "Options are:\n"
+  "  --help\n"
+  "  --algorithm ALG   Use algorithm ALG. Not implelemented yet\n"
+  "  --decrypt         Decrypt the file given on the command line\n"
+  "  --slot rm_slot    Set slot to rm_slot: 0 or 1. Default 0\n"
+  "  --out out_file    Write output to file\n"
+  "  --key passphrase  Use passphrase or passphrase file\n";
+
+void
+usage(const char *msg)
+{
+	fprintf(stderr, "%s\n%s", msg, help_usage);
+}
+
+struct key_buf
+{
+	char kb_key[24];	/* AES192 : 24 * 8 = 192 */
+	int  kb_enc;	/* 1 - encrypt; 0 - decrypt */
+	int  kb_pad;	/* must be 0 ? */
+};
+
+int
+main(int argc, char *argv[])
+{
+	struct key_buf kbuf;
+	char *key_file = NULL;
+	char *in_file  = NULL;
+	char *out_file = NULL;
+	struct stat statbuf;
+	char *line;
+	int slot = 0, infd = -1, outfd = -1, pwfd = -1;
+	int rc, opt;
+
+	if (argc == 1)
+		return internal_test(0);
+	else if (argc == 2 && argv[1][0] != '-')
+		return internal_test(argv[1][0] - '0');
+
+	memset(&kbuf, 0, sizeof (struct key_buf));
+	kbuf.kb_enc = 1; 	// 1 - to encrypt. Default
+	while ((opt = getopt_long(argc, argv, "ha:dk:o:s:",
+				  long_opt, NULL)) != -1)
+		switch (opt) {
+		case 'a':
+			// combine AES128, AES192, etc.
+			break;
+		case 'd':
+			// 0 - to Decrypt
+			kbuf.kb_enc = 0;
+			break;
+		case 'k':
+			key_file = optarg;
+			break;
+		case 'o':
+			out_file = optarg;
+			break;
+		case 's':
+			slot = atoi(optarg);
+			break;
+		case 'h':
+		default:
+			usage("getopt");
+		}
+
+
+	if (!key_file || !out_file)
+		die("missing passphrase and/or output file");
+
+	if (optind >= argc)
+		die("Expected filename after options");
+	in_file = argv[argc-1];
+
+	infd = open(in_file, O_RDONLY, 0);
+	if (infd == -1)
+		die("open(%s)", in_file);
+
+	if (fstat(infd, &statbuf))
+		die("fstat(%s)", in_file);
+
+	pwfd = open(key_file, O_RDONLY, 0);
+	if (pwfd == -1)
+		die("open(%s)", key_file);
+
+	rc = read(pwfd, kbuf.kb_key, sizeof (kbuf.kb_key));
+	if (rc < 0)
+		die("read(%s)", key_file);
+
+	close(pwfd);
+
+	// Align to 16 byte: len = (statbuf.st_size + 0xFU) & (~0xFU);
+	size_t len = statbuf.st_size;
+
+	if ((len < 16) || (len > (SIZE_IN_BYTES - DB_OFFSET_MEM)))
+		die("file size %lu is out of demo range [16, %u]", len,
+			SIZE_IN_BYTES - DB_OFFSET_MEM);
+
+	outfd = open(out_file, O_WRONLY | O_CREAT | O_TRUNC,
+		     S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	if (outfd == -1)
+		die("open(%s)", out_file);
+
+	printf("in_file, sz, out_file = %s, %ld %s\n",
+		in_file, statbuf.st_size, out_file);
+	printf("slot, passphrase = %d, %s\n", slot, kbuf.kb_key);
+
+	char *in_mm = (char *)mmap(NULL, len, PROT_READ, MAP_SHARED, infd, 0);
+
+	//Initialize and memory map RMs
+	if(InitializeMapRMs(slot) == -1)
+		die("Use --slot option in this test; see xmutil listapps");
+
+	//Allocate XRT buffer to be used for input and output of application
+	auto device = xrt::device(0);
+	auto bufferObject = xrt::bo(device, SIZE_IN_BYTES, 0);
+	uint32_t *vptr = (uint32_t *)bufferObject.map<int*>();
+	uint64_t uvp = (uint64_t)vptr;
+	int status;
+
+	mapBuffer(bufferObject);
+	// Write to the memory that was mapped, use devmem from
+	// the command line of Linux to verify it worked
+
+	// Write the Key (passphrase) and the data
+	memcpy(vptr + EKB_OFFSET, &kbuf, sizeof(kbuf));
+	memcpy(vptr +  DB_OFFSET, in_mm, len);
+
+	printf("AES192 in slot %d to %s file %s\n\tout: %s\n", slot,
+		kbuf.kb_enc ? "Encrypt" : "Decrypt", in_file, out_file);
+	//Initialize AES192
+	StartAccel(slot);
+
+	// key to Accelerator - 32b (16b x 2) to Offset 32
+	DataToAccel(slot, EKB_OFFSET_MEM, KEYBUFF_SIZE, TID_1);
+	DataToAccel(slot,  DB_OFFSET_MEM,       len>>4, TID_0);
+	status = DataToAccelDone(slot);
+	if (!status)
+		die("DataToAccelDone(%d)", slot);
+
+	DataFromAccel(slot, DB_OFFSET_MEM, len>>4);
+	status = DataFromAccelDone(slot);
+	if (!status)
+		die("DataFromAccelDone(%d)", slot);
+
+	const void *cvp = (const void *)(uvp + DB_OFFSET_MEM);
+	// write only the original size
+	status = write(outfd, cvp, statbuf.st_size);
+	FinaliseUnmapRMs(slot);
+	close(infd);
+	close(outfd);
+	if (!status)
+		die("write(%s)", out_file);
+
+	return 0;
 }
