@@ -43,18 +43,15 @@ sudo xlnx-config.sysinit
 sudo reboot
 sudo apt install xrt-dkms
 ```
-- Update /etc/apt/sources.list with limerick-updates.
+### ***Update /etc/apt/sources.list with limerick-updates.*** - Note: Steps will be simpler for production.
 ```
 sudo vim /etc/apt/sources.list
-```
 - Add the below line to the sources.list file
-```
 deb https://saikira:7k1ZTN6JvBL09jtDzwKp@private-ppa.launchpadcontent.net/limerick-team/limerick-updates/ubuntu jammy main
-```
 - Add PPA Public Key by running the below command. This only needs to be done once with a new SD card image.
-```
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 7BBD4B7288690887C53E2372F6565ECB47853AFB
 ```
+Run Upgrade
 ```
 sudo apt update
 sudo apt upgrade
@@ -77,29 +74,23 @@ kria-dfx-apps/bld/src/FFT/fft
 kria-dfx-apps/bld/src/FIR/fir
 ```
 
-# Steps to install firmware on the target
-
-* Run xmutil listapps to look at the installed firmware on the target. You will see the default k26-starter-kits firmware installed.
+### ***Steps to install firmware on the target*** - Note: Steps will be simpler for production.
 ```
+- Run xmutil listapps to look at the installed firmware on the target. You will see the default k26-starter-kits firmware installed.
 ubuntu@kria:~/kria-dfx-apps/bld$ cd ~
 ubuntu@kria:~$ sudo xmutil listapps
                 k26-starter-kits            XRT_FLAT                k26-starter-kits            XRT_FLAT               (0+0)                  0,
-```
 
-* Clone the git repository kria-apps-firmware. This repository has pre-built firmware for DFX example design. Also, install bootgen on the target.
-```
+- Clone the git repository kria-apps-firmware. This repository has pre-built firmware for DFX example design. Also, install bootgen on the target.
 sudo git clone https://gitenterprise.xilinx.com/SOM/kria-apps-firmware.git
 sudo apt install bootgen-xlnx
-```
 
-* Navigate to kria-apps-firmware directory and run the make file. This installs the firmware on the target at the location /lib/firmware/xilinx.
-```
+- Navigate to kria-apps-firmware directory and run the make file. This installs the firmware on the target at the location /lib/firmware/xilinx.
 cd kria-apps-firmware
 sudo git checkout dev-bash
 sudo make -C k26-dfx/2rp_design/ install
-```
-* Verify that firmware is installed on target by running xmutil listapps command. You should see the newly installed firmware with base_type PL_DFX.
-```
+
+- Verify that firmware is installed on target by running xmutil listapps command. You should see the newly installed firmware with base_type PL_DFX.
 ubuntu@kria:~/kria-apps-firmware$ sudo xmutil listapps
                      Accelerator          Accel_type                            Base           Base_type      #slots(PL+AIE)         Active_slot
 
