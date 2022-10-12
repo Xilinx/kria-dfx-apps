@@ -101,3 +101,4 @@ ubuntu@kria:~/kria-apps-firmware$ sudo xmutil listapps
                 k26-starter-kits            XRT_FLAT                k26-starter-kits            XRT_FLAT               (0+0)                  0,
 ```
 
+[Run the applications and Jupyter notebooks on board](https://gitenterprise.xilinx.com/SOM/kria_app_dev_doc/blob/main/dfx/run_application_on_target.md)
