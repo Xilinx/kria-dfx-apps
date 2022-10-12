@@ -11,7 +11,7 @@ Repository consists of applications to test the accelerators and Jupyter noteboo
   2. Program the iot-limerick-kria-classic-desktop-2204-x06-20220614-78.img.xz on SD Card using Balena Etcher. Steps for flashing the Micro-SD card can be found [here](https://www.xilinx.com/products/som/kria/kv260-vision-starter-kit/kv260-getting-started-ubuntu/setting-up-the-sd-card-image.html)
 
 
-* Insert the Programmed SD Card in KV260/KR260 board, connect the ethernet cable to the board and power ON the board. Connect to the serial output of the board with baud rate set to 115200.
+* Insert the Programmed SD Card in KV260/KR260 board, connect the ethernet cable to the board and power ON the board. On your computer, connect to the serial output of the board with baud rate set to 115200 bauds.
 
 * Once linux boots up, use the below credentials to login and change password when prompted.
 ```
@@ -74,4 +74,4 @@ kria-dfx-apps/bld/src/FFT/fft
 kria-dfx-apps/bld/src/FIR/fir
 ```
 
-[Run the applications and Jupyter notebooks on board](https://gitenterprise.xilinx.com/SOM/kria_app_dev_doc/blob/main/dfx/run_application_on_target.md)
+* Steps to run the applications and Jupyter notebooks on target are provided [here](https://gitenterprise.xilinx.com/SOM/kria_app_dev_doc/blob/main/dfx/run_application_on_target.md)
