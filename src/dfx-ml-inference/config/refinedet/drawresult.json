@@ -1,6 +1,6 @@
 {
-  "xclbin-location":"/usr/lib/dpu.xclbin",
-  "vvas-library-repo": "/opt/xilinx/lib",
+  "xclbin-location":"/usr/lib/dfx-ml-inference.xclbin",
+  "vvas-library-repo": "/opt/xilinx/dfx-ml-inference/lib",
   "element-mode":"inplace",
   "kernels" :[
     {
