@@ -1,10 +1,10 @@
 {
-  "xclbin-location":"/lib/firmware/xilinx/k26dfx-smartcam/k26dfx-smartcam.xclbin",
-  "vvas-library-repo": "/opt/xilinx/lib",
+  "xclbin-location":"/lib/firmware/xilinx/k26_2rp/2rp_design/DPU/dfx-ml-inference.xclbin",
+  "vvas-library-repo": "/opt/xilinx/dfx-ml-inference/lib",
   "element-mode": "transform",
   "kernels": [
     {
-      "kernel-name": "pp_pipeline_accel:{pp_pipeline_accel_0}",
+      "kernel-name": "pp_pipeline_accel:{pp_pipeline_accel_1}",
       "library-name": "libvvas_xpp.so",
       "config": {
         "debug_level" : 1,
