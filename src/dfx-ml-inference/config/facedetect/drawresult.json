@@ -1,5 +1,5 @@
 {
-  "xclbin-location":"/usr/lib/dpu.xclbin",
+  "xclbin-location":"/usr/lib/k26-dfx-inference.xclbin",
   "vvas-library-repo": "/opt/xilinx/lib",
   "element-mode":"inplace",
   "kernels" :[
