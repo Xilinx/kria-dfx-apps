@@ -1,8 +1,9 @@
+/*
 #########################################################################
 # Copyright (c) 2022, Xilinx Inc. and Contributors. All rights reserved.
 # SPDX-License-Identifier: MIT
 #########################################################################
-
+*/
 #ifndef __VVAS_AIRENDER_H__
 #define __VVAS_AIRENDER_H__
 
