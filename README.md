@@ -76,3 +76,5 @@ kria-dfx-apps/bld/src/FIR/fir
 ```
 
 * Steps to run the applications and Jupyter notebooks on target are provided [here](https://gitenterprise.xilinx.com/SOM/kria_app_dev_doc/blob/main/dfx/run_application_on_target.md)
+
+                                     Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
