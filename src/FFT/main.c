@@ -45,7 +45,7 @@ int DataToAccelDone(int slot);
 int DataFromAccelDone(int slot);
 
 //Input to config port of FFT IP
-uint32_t config[] = {0x0000000c,0x0000000c,0x0000000c,0x0000000c};
+uint32_t config_fft[] = {0x0000000c,0x0000000c,0x0000000c,0x0000000c};
 
 //FFT Input Data
 uint32_t fft_data_in[] = {
@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
 
 	//Write to the memory that was mapped, use devmem from the command line of Linux to verify it worked
 	//Write Config Buffer to memory at CONFIG_OFFSET of allocated XRT Buffer
-    std::memcpy(vptr+CONFIG_OFFSET, &config, sizeof(config));
+    std::memcpy(vptr+CONFIG_OFFSET, &config_fft, sizeof(config_fft));
    	for (int i=0;i<SIXTEEN_KB;i=i+4)
 	    std::memcpy(vptr+ONE_KB+i, &fft_data_in, sizeof(fft_data_in));
     
