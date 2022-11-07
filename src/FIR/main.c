@@ -44,7 +44,7 @@ int DataFromAccelDone(int slot);
 
 
 //Input to config port of FIR IP	
-uint32_t config[] = {0x0000000c,0x0000000c,0x0000000c,0x0000000c};
+uint32_t config_fir[] = {0x0000000c,0x0000000c,0x0000000c,0x0000000c};
 
 //Filter co-efficients - Input to reload port of FIR IP
 int16_t reload[] = {142,-266,-59,32,66,70,61,44,23,1,-21,-40,-54,-59,-56,-43,-22,5,33,58,75,81,74,53,21,-17,-56,-90,-111,-114,-98,-64,-16,39,93,135,159,157,128,75,4,-74,-147,-201,-226,-215,-166,-84,20,130,230,300,326,300,219,92,-64,-227,-370,-468,-497,-444,-308,-99,159,429,670,836,887,790,528,102,-468,-1145,-1875,-2596,-3244,-3757,-4086,28568};
@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
 	for (int i=0;i<40;i++)
 		vptr[i]= (uint16_t)reload[2*i] | reload[2*i+1]<<16;
 	//Write Config Buffer to memory at CONFIG_OFFSET of allocated XRT Buffer
-	std::memcpy(vptr+CONFIG_OFFSET, &config, sizeof(config));
+	std::memcpy(vptr+CONFIG_OFFSET, &config_fir, sizeof(config_fir));
 	//Write FIR Input Data of 64KB from fir_data_in buffer
    	for (int i=0;i<SIXTEEN_KB;i=i+4)
 	    std::memcpy(vptr+FIR_DATA_IN_OFFSET+i, &fir_data_in, sizeof(fir_data_in));
