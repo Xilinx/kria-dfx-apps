@@ -61,7 +61,7 @@ sudo apt upgrade
 ```cpp
 sudo apt install cmake                                             //Install cmake
 sudo apt install uuid-dev libdfx-dev libdfx-mgr-dev                //Install necessary libraries
-sudo git clone https://gitenterprise.xilinx.com/SOM/kria-dfx-apps  //Clone Application git
+sudo git clone https://github.com/Xilinx.com/kria-dfx-apps.git  //Clone Application git
 cd kria-dfx-apps
 sudo mkdir bld
 cd bld
@@ -75,6 +75,6 @@ kria-dfx-apps/bld/src/FFT/fft
 kria-dfx-apps/bld/src/FIR/fir
 ```
 
-* Steps to run the applications and Jupyter notebooks on target are provided [here](https://gitenterprise.xilinx.com/SOM/kria_app_dev_doc/blob/main/dfx/run_application_on_target.md)
+* Steps to run the applications and Jupyter notebooks on target are provided [here](https://xilinx.github.io/kria-apps-docs/home/build/html/index.html/dfx/run_application_on_target.md)
 
                                      Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
