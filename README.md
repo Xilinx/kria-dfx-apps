@@ -61,7 +61,7 @@ sudo apt upgrade
 ```cpp
 sudo apt install cmake                                             //Install cmake
 sudo apt install uuid-dev libdfx-dev libdfx-mgr-dev                //Install necessary libraries
-sudo git clone https://github.com/Xilinx.com/kria-dfx-apps.git  //Clone Application git
+sudo git clone https://github.com/Xilinx/kria-dfx-apps.git  //Clone Application git
 cd kria-dfx-apps
 sudo mkdir bld
 cd bld
