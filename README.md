@@ -44,19 +44,7 @@ sudo xlnx-config.sysinit
 sudo reboot
 sudo apt install xrt-dkms
 ```
-#### ***Update /etc/apt/sources.list with limerick-updates.*** - Note: Steps will be simpler for production.
-```
-sudo vim /etc/apt/sources.list
-- Add the below line to the sources.list file
-deb https://saikira:7k1ZTN6JvBL09jtDzwKp@private-ppa.launchpadcontent.net/limerick-team/limerick-updates/ubuntu jammy main
-- Add PPA Public Key by running the below command. This only needs to be done once with a new SD card image.
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 7BBD4B7288690887C53E2372F6565ECB47853AFB
-```
-Run Upgrade
-```
-sudo apt update
-sudo apt upgrade
-```
+
 ### Steps for Native compilation of applications on target
 ```cpp
 sudo apt install cmake                                             //Install cmake
