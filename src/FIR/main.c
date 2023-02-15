@@ -19,7 +19,7 @@
 #include "experimental/xrt_device.h"
 #include "experimental/xrt_kernel.h"
 
-#define SIZE_IN_BYTES       0x4000000	//64MB
+#define SIZE_IN_BYTES		0x4000000	//64MB
 #define SIXTEEN_KB			16384	//Number of Bytes
 
 #define CONFIG_OFFSET		128		//Config Buffer Offset
@@ -42,9 +42,9 @@
 #define TID_2				0x2		//TID 2
 
 #define die(fmt, args ...) do { fprintf(stderr, \
-	    "ERROR:%s():%u " fmt ": %s\n", \
-	    __func__, __LINE__, ##args, errno ? strerror(errno) : ""); \
-	    exit(EXIT_FAILURE); \
+		"ERROR:%s():%u " fmt ": %s\n", \
+		__func__, __LINE__, ##args, errno ? strerror(errno) : ""); \
+		exit(EXIT_FAILURE); \
 	} while (0)
 
 int InitializeMapRMs(int slot);
@@ -100,8 +100,7 @@ void isTestPassed(uint32_t *vptr)
 		printf("\t Error: FIR TEST FAILED !\n");
 }
 
-int 
-internal_test(int slot)
+int internal_test(int slot)
 {
 		if (slot != 1 && slot != 0)
 		die("Invalid slot: %d - must be 0 or 1", slot);
@@ -173,23 +172,24 @@ static struct option const long_opt[] =
 	{ "slot",	required_argument, 	NULL, 's'},
 	{ "config",	required_argument, 	NULL, 'c'},
 	{ "reload",	required_argument, 	NULL, 'r'},
+	{ "input",	required_argument, 	NULL, 'i'},
 	{ "out",	required_argument, 	NULL, 'o'},
 	{ NULL, 0, NULL, 0}
 };
 
 static const char help_usage[] =
-  " FIR_PROG (0|1)\n"
-  "   preform a quick internal test for slot 0 or 1\n\n"
-  " FIR_PROG [<options>] --config filename --reload filename --out out_file in_file\n"
-  "Options are:\n"
-  "  --help\n"
-  "  --slot rm_slot    Set slot to rm_slot: 0 or 1. Default 0\n"
-  "  --out out_file    Write output to file\n"
-  "  --config filename Use config file\n"
-  "  --reload filename Use reload file\n";
+	"Usage FIR_PROG [<options>] --slot rm_slot --config filename --reload filename --output filename --input filename\n"
+	" FIR_PROG (0|1) preform a quick internal test for slot 0 or 1\n\n"
+	"Options are:\n"
+	"  -h, --help\n"
+	"  -s, --slot rm_slot		Set slot to rm_slot: 0 or 1. Default 0\n"
+	"  -c, --config filename	Use config file\n"
+	"  -r, --reload filename	Use reload file\n"
+	"  -i, --input filename		Input file to the program\n"
+	"  -o, --out filename		Write output to file\n\n"
+	"Example : fir -s 0 -c config.bin -r reload.bin -o output.bin -i input.bin";
 
-void
-usage(const char *msg)
+void usage(const char *msg)
 {
 	fprintf(stderr, "%s\n%s", msg, help_usage);
 	exit(0);
@@ -201,8 +201,7 @@ struct config_buf
 	int  kb_pad[3];	/* must be 0 ? */
 };
 
-int
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	char *config_file = NULL;
 	char *reload_file = NULL;
@@ -221,7 +220,7 @@ main(int argc, char *argv[])
 	else if (argc == 2 && argv[1][0] != '-')
 		return internal_test(argv[1][0] - '0');
 
-	while ((opt = getopt_long(argc, argv, "hc:r:o:s:",
+	while ((opt = getopt_long(argc, argv, "hc:r:o:s:i:",
 				  long_opt, NULL)) != -1)
 		switch (opt) {
 		case 'c':
@@ -236,18 +235,17 @@ main(int argc, char *argv[])
 		case 'r':
 			reload_file = optarg;
 			break;
+		case 'i':
+			in_file = optarg;
+			break;
 		case 'h':
 		default:
 			usage("getopt");
 		}
 
-	if (!config_file || !out_file || !reload_file)
-		die("missing config and/or output file and/or reload file");
-
-	if (optind >= argc)
-		die("Expected filename after options");
+	if (!config_file || !out_file || !reload_file || !in_file)
+		die("missing config and/or output file and/or reload file and/or input file");
 	
-	in_file = argv[argc-1];
 	infd = open(in_file, O_RDONLY, 0);
 	if (infd == -1)
 		die("open(%s)", in_file);
@@ -261,7 +259,7 @@ main(int argc, char *argv[])
 		die("open(%s)", config_file);
 	if (fstat(configfd, &configbuf))
 		die("fstat(%s)", config_file);
-    size_t config_len = configbuf.st_size;
+	size_t config_len = configbuf.st_size;
 	char *config_mm = (char *)mmap(NULL, config_len, PROT_READ, MAP_SHARED, configfd, 0);
 
 	reloadfd = open(reload_file, O_RDONLY, 0);
@@ -269,15 +267,15 @@ main(int argc, char *argv[])
 		die("open(%s)", reload_file);
 	if (fstat(reloadfd, &reloadbuf))
 		die("fstat(%s)", reload_file);
-    size_t reload_len = reloadbuf.st_size;
+	size_t reload_len = reloadbuf.st_size;
 	char *reload_mm = (char *)mmap(NULL, reload_len, PROT_READ, MAP_SHARED, reloadfd, 0);
 
 	outfd = open(out_file, O_WRONLY | O_CREAT | O_TRUNC,
-		     S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (outfd == -1)
 		die("open(%s)", out_file);
 
-	printf("in_file, sz, out_file = %s, %ld %s\n",
+	printf("in_file, sz, out_file = %s, %ld, %s\n",
 		in_file, statbuf.st_size, out_file);
 
 	//Initialize and memory map RMs
@@ -316,23 +314,23 @@ main(int argc, char *argv[])
 
 	//Config fir input data with TID 0
 	DataToAccel(slot, INPUT_OFFSET_MEM, in_len>>4, TID_0);
-	status = DataToAccelDone(slot);
-	if (!status)
-		die("DataToAccelDone(%d)", slot);
 	printf("\t Configure FIR Input data done.\n");
 	
 	//Config fir output data
 	DataFromAccel(slot, RESULT_OFFSET_MEM, in_len>>4);
-	sleep(2);							//Time added for completion of FFT before reading the out data
+	sleep(2);							//Time added for completion of FIR before reading the out data
 	status = DataFromAccelDone(slot);
 	if (!status)
 		die("DataToAccelDone(%d)", slot);
+	printf("\t Data from Accel done.\n");
 
 	const void *cvp = (const void *)(uvp + RESULT_OFFSET_MEM);
 	// write only the original size
 	status = write(outfd, cvp, statbuf.st_size);
 	FinaliseUnmapRMs(slot);
 	close(infd);
+	close(configfd);
+	close(reloadfd);
 	close(outfd);
 	if (!status)
 		die("write(%s)", out_file);

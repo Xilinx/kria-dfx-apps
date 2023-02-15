@@ -19,7 +19,7 @@
 #include "experimental/xrt_device.h"
 #include "experimental/xrt_kernel.h"
 
-#define SIZE_IN_BYTES       0x4000000	//64MB
+#define SIZE_IN_BYTES		0x4000000	//64MB
 #define ONE_KB				1024		//Number of Bytes
 #define SIXTEEN_KB			16384		//Number of Bytes
 
@@ -42,9 +42,9 @@
 
 
 #define die(fmt, args ...) do { fprintf(stderr, \
-	    "ERROR:%s():%u " fmt ": %s\n", \
-	    __func__, __LINE__, ##args, errno ? strerror(errno) : ""); \
-	    exit(EXIT_FAILURE); \
+		"ERROR:%s():%u " fmt ": %s\n", \
+		__func__, __LINE__, ##args, errno ? strerror(errno) : ""); \
+		exit(EXIT_FAILURE); \
 	} while (0)
 
 int InitializeMapRMs(int slot);
@@ -97,9 +97,8 @@ void isTestPassed(uint32_t *vptr)
 		else
 			printf("\t Error: FFT TEST FAILED !\n");
 }
-		
-int 
-internal_test(int slot)
+
+int internal_test(int slot)
 {
 	if (slot != 1 && slot != 0)
 		die("Invalid slot: %d - must be 0 or 1", slot);
@@ -181,37 +180,40 @@ internal_test(int slot)
 
 static struct option const long_opt[] =
 {
-	{ "help",             no_argument, NULL, 'h'},
-	{ "config",        required_argument, NULL, 'c'},
-	{ "out",        required_argument, NULL, 'o'},
-	{ "slot",       required_argument, NULL, 's'},
+	{ "help",	no_argument, 		NULL, 'h'},
+	{ "slot",	required_argument, 	NULL, 's'},
+	{ "config",	required_argument, 	NULL, 'c'},
+	{ "input",	required_argument, 	NULL, 'i'},
+	{ "output",	required_argument, 	NULL, 'o'},
 	{ NULL, 0, NULL, 0}
 };
 
 static const char help_usage[] =
-  "Usage: FFT_PROG [<options>] --slot rm_slot --config filename --out out_file in_file\n"
-  " FFT_PROG (0|1) preform a quick internal test for slot 0 or 1\n\n"  
-  "Options are:\n"
-  "  -h, --help\n"
-  "  -s, --slot rm_slot    Set slot to rm_slot: 0 or 1. Default 0\n"
-  "  -o, --out out_file    Write output to file\n"
-  "  -c, --config filename Use config file\n";
+	"Usage: FFT_PROG [<options>] --slot rm_slot --config filename --output filename --input filename\n"
+	" FFT_PROG (0|1) preform a quick internal test for slot 0 or 1\n\n"  
+	"Options are:\n"
+	"  -h, --help\n"
+	"  -s, --slot rm_slot		Set slot to rm_slot: 0 or 1. Default 0\n"
+	"  -c, --config filename	Use config file\n"
+	"  -i, --input filename		Input file to the program"
+	"  -o, --out filename		Write output to file\n\n"
+	"Example : fft -s 0 -c config.bin -o output.bin -i input.bin\n";
 
-void
-usage(const char *msg)
+void usage(const char *msg)
 {
 	fprintf(stderr, "%s\n%s", msg, help_usage);
 	exit(0);
 }
 
-int
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	char *config_file = NULL;
 	char *in_file  = NULL;
 	char *out_file = NULL;
+
 	struct stat statbuf;
-    struct stat configbuf;
+	struct stat configbuf;
+	
 	int slot = 0, infd = -1, outfd = -1, configfd = -1;
 	int rc, opt;
 
@@ -220,7 +222,7 @@ main(int argc, char *argv[])
 	else if (argc == 2 && argv[1][0] != '-')
 		return internal_test(argv[1][0] - '0');
 
-	while ((opt = getopt_long(argc, argv, "hc:o:s:",
+	while ((opt = getopt_long(argc, argv, "hc:o:s:i:",
 				  long_opt, NULL)) != -1)
 		switch (opt) {
 		case 'c':
@@ -232,18 +234,17 @@ main(int argc, char *argv[])
 		case 's':
 			slot = atoi(optarg);
 			break;
+		case 'i':
+			in_file = optarg;
+			break;
 		case 'h':
 		default:
 			usage("getopt");
 		}
 
-	if (!config_file || !out_file)
-		die("missing config and/or output file");
-
-	if (optind >= argc)
-		die("Expected filename after options");
+	if (!config_file || !out_file || !in_file)
+		die("missing config and/or output file and/or input file");
 	
-	in_file = argv[argc-1];
 	infd = open(in_file, O_RDONLY, 0);
 	if (infd == -1)
 		die("open(%s)", in_file);
@@ -255,13 +256,13 @@ main(int argc, char *argv[])
 	configfd = open(config_file, O_RDONLY, 0);
 	if (configfd == -1)
 		die("open(%s)", config_file);
-    if (fstat(configfd, &configbuf))
+	if (fstat(configfd, &configbuf))
 		die("fstat(%s)", config_file);
-    size_t config_len = configbuf.st_size;
+	size_t config_len = configbuf.st_size;
 	char *config_mm = (char *)mmap(NULL, config_len, PROT_READ, MAP_SHARED, configfd, 0);
 
 	outfd = open(out_file, O_WRONLY | O_CREAT | O_TRUNC,
-		     S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (outfd == -1)
 		die("open(%s)", out_file);
 
@@ -283,9 +284,9 @@ main(int argc, char *argv[])
 	// Write to the memory that was mapped, use devmem from
 	// the command line of Linux to verify it worked
 
-	// Write the config and the data
+	// Write the config and input data
 	memcpy(vptr + CONFIG_OFFSET, config_mm, config_len);
-	memcpy(vptr +  ONE_KB, in_mm, in_len);
+	memcpy(vptr + ONE_KB, in_mm, in_len);
 
 	// Configure four FFT channels
 	for (int i=1; i<=4; i++)
@@ -302,8 +303,6 @@ main(int argc, char *argv[])
  	//Config S2MM data
 	//Arguments: (int slot, uint64_t offset, uint64_t size)
 	DataToAccel(slot, FFT_DATA_IN_OFFSET_MEM, in_len>>4, TID_0);
-	if (!status)
-		die("DataToAccelDone(%d)", slot);
 	printf("\t Configure FFT data done.\n");
 
 	DataFromAccel(slot, RESULT_OFFSET_MEM, in_len>>4);
@@ -317,6 +316,7 @@ main(int argc, char *argv[])
 	status = write(outfd, cvp, statbuf.st_size);
 	FinaliseUnmapRMs(slot);
 	close(infd);
+	close(configfd);
 	close(outfd);
 	if (!status)
 		die("write(%s)", out_file);
