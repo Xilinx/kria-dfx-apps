@@ -147,8 +147,7 @@ void isTestPassed(const char* testName,uint32_t *vptr)
 	return;
 }
 
-int
-internal_test(int slot)
+int internal_test(int slot)
 {
 	if (slot != 1 && slot != 0)
 		die("Invalid slot: %d - must be 0 or 1", slot);
@@ -227,9 +226,9 @@ internal_test(int slot)
 static struct option const long_opt[] =
 {
 	{ "help",             no_argument, NULL, 'h'},
-	{ "algorithm",  required_argument, NULL, 'a'},
 	{ "decrypt",          no_argument, NULL, 'd'},
 	{ "key",        required_argument, NULL, 'k'},
+	{ "in",         required_argument, NULL, 'i'},
 	{ "out",        required_argument, NULL, 'o'},
 	{ "slot",       required_argument, NULL, 's'},
 	{ NULL, 0, NULL, 0}
@@ -241,14 +240,12 @@ static const char help_usage[] =
   " AES_PROG [<options>] --key passphrase --out out_file in_file\n"
   "Options are:\n"
   "  --help\n"
-  "  --algorithm ALG   Use algorithm ALG. Not implelemented yet\n"
   "  --decrypt         Decrypt the file given on the command line\n"
   "  --slot rm_slot    Set slot to rm_slot: 0 or 1. Default 0\n"
   "  --out out_file    Write output to file\n"
   "  --key passphrase  Use passphrase or passphrase file\n";
 
-void
-usage(const char *msg)
+void usage(const char *msg)
 {
 	fprintf(stderr, "%s\n%s", msg, help_usage);
 }
@@ -279,12 +276,9 @@ main(int argc, char *argv[])
 
 	memset(&kbuf, 0, sizeof (struct key_buf));
 	kbuf.kb_enc = 1; 	// 1 - to encrypt. Default
-	while ((opt = getopt_long(argc, argv, "ha:dk:o:s:",
+	while ((opt = getopt_long(argc, argv, "hdk:o:s:i:",
 				  long_opt, NULL)) != -1)
 		switch (opt) {
-		case 'a':
-			// combine AES128, AES192, etc.
-			break;
 		case 'd':
 			// 0 - to Decrypt
 			kbuf.kb_enc = 0;
@@ -298,18 +292,16 @@ main(int argc, char *argv[])
 		case 's':
 			slot = atoi(optarg);
 			break;
+		case 'i':
+			in_file = optarg;
+			break;
 		case 'h':
 		default:
 			usage("getopt");
 		}
 
-
-	if (!key_file || !out_file)
-		die("missing passphrase and/or output file");
-
-	if (optind >= argc)
-		die("Expected filename after options");
-	in_file = argv[argc-1];
+	if (!key_file || !out_file || !in_file)
+		die("missing passphrase and/or output file and/or input file");
 
 	infd = open(in_file, O_RDONLY, 0);
 	if (infd == -1)
