@@ -59,13 +59,18 @@ mkdir bld; cd bld
 cmake ..; make
 sudo xmutil unloadapp
 sudo xmutil loadapp AES128
-sudo ./src/AES128/aes128 -s 0 -k ../src/data/AES128_dec_key.bin -i ../src/data/AES128_in_data.bin -o ../src/data/AES128_res_data.bin
+sudo ./src/AES128/aes128 -s 0 -k ../src/data/AES128_dec_key.bin -i ../src/data/AES128_in_data.bin -o ../src/data/AES128_res_data.bin -d
 sudo xmutil loadapp FIR
 sudo ./src/FIR/fir -s 1 -c ../src/data/FIR_config.bin -r ../src/data/FIR_reload.bin -i ../src/data/FIR_in_data.bin -o ../src/data/FIR_res_data.bin
 sudo xmutil unloadapp 1
 sudo xmutil loadapp AES192
-sudo ./src/AES192/aes192 -s 1 -k ../src/data/AES192_dec_key.bin -i ../src/data/AES192_in_data.bin -o ../src/data/AES192_res_data.bin
+sudo ./src/AES192/aes192 -s 1 -k ../src/data/AES192_dec_key.bin -i ../src/data/AES192_in_data.bin -o ../src/data/AES192_res_data.bin -d
 sudo xmutil unloadapp 
 sudo xmutil loadapp FFT
 sudo ./src/FFT/fft -c ../src/data/FFT_config.bin -i ../src/data/FFT_in_data.bin -o ../src/data/FFT_res_data.bin
+cd ../src/data
+diff AES128_out_data.bin AES128_res_data.bin
+diff AES192_out_data.bin AES192_res_data.bin
+diff FIR_out_data.bin FIR_res_data.bin
+diff FFT_out_data.bin FFT_res_data.bin
 ```
