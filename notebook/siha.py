@@ -80,24 +80,19 @@ class AcapdAccel:
         return libsiha.DataToAccel(self.slot, offset, size, tid)
     
     def config_fft(self, offset, size):
-        print("FFT TEST :\n")
         status = 1
         if status : 
             libsiha.DataToAccel(self.slot,offset,size,1)
             status = libsiha.DataToAccelDone(self.slot)
         if status :
-            print("\t Configure FFT Ch0 done.\n") 
             libsiha.DataToAccel(self.slot,offset,size,2)
             status = libsiha.DataToAccelDone(self.slot)
         if status : 
-            print("\t Configure FFT Ch1 done.\n")
             libsiha.DataToAccel(self.slot,offset,size,3)
             status = libsiha.DataToAccelDone(self.slot)
         if status : 
-            print("\t Configure FFT Ch2 done.\n")
             libsiha.DataToAccel(self.slot,offset,size,4)
             status = libsiha.DataToAccelDone(self.slot)
-        print("\t Configure FFT Ch3 done.\n")
 
     def run(self, offset, size, tid, offset2):
         offset*=4
@@ -105,11 +100,8 @@ class AcapdAccel:
         offset2*=4
         start = time.time()
         libsiha.DataToAccel(self.slot,offset,size,tid)
-        print("\t Configure Input data done.\n")
         libsiha.DataFromAccel(self.slot, offset2, size)
         status = libsiha.DataFromAccelDone(self.slot)
-        if status :
-            print("\t Received Data From Accel.\n")
         stop = time.time()
         size*=16
         self.timeTaken = stop-start
