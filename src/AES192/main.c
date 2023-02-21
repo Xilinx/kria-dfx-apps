@@ -4,6 +4,7 @@
  */
 
 #include <string.h>
+#include <cstring>
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -146,8 +147,7 @@ void isTestPassed(const char* testName,uint32_t *vptr)
 	return;
 }
 
-int
-internal_test(int slot)
+int internal_test(int slot)
 {
 	if (slot != 1 && slot != 0)
 		die("Invalid slot: %d - must be 0 or 1", slot);
@@ -169,11 +169,11 @@ internal_test(int slot)
 	// Write Decryption Key of Size 32 bytes (4bytes x 8 )
 	std::memcpy(vptr+DKB_OFFSET, &decryptionkeybuff, sizeof(decryptionkeybuff));
 	// Write Encryption Key of Size 32 bytes (4bytes x 8 )
-    std::memcpy(vptr+EKB_OFFSET, &encryptionkeybuff, sizeof(encryptionkeybuff));
+	std::memcpy(vptr+EKB_OFFSET, &encryptionkeybuff, sizeof(encryptionkeybuff));
 	// Write Encrypted Buffer of Size 256 bytes (4bytes x 64 )
-    std::memcpy(vptr+EB_OFFSET, &encryptedbuff, sizeof(encryptedbuff));
+	std::memcpy(vptr+EB_OFFSET, &encryptedbuff, sizeof(encryptedbuff));
 	// Write Decrypted Buffer of Size 256 bytes (4bytes x 64 )
-    std::memcpy(vptr+DB_OFFSET, &decryptedbuff, sizeof(decryptedbuff));
+	std::memcpy(vptr+DB_OFFSET, &decryptedbuff, sizeof(decryptedbuff));
 	
 	printf("AES192 TEST on Slot %d:\n",slot);
 	//Initialize AES192
@@ -226,30 +226,31 @@ internal_test(int slot)
 static struct option const long_opt[] =
 {
 	{ "help",             no_argument, NULL, 'h'},
-	{ "algorithm",  required_argument, NULL, 'a'},
 	{ "decrypt",          no_argument, NULL, 'd'},
 	{ "key",        required_argument, NULL, 'k'},
+	{ "in",         required_argument, NULL, 'i'},
 	{ "out",        required_argument, NULL, 'o'},
 	{ "slot",       required_argument, NULL, 's'},
 	{ NULL, 0, NULL, 0}
 };
 
 static const char help_usage[] =
-  " AES_PROG (0|1)\n"
-  "   preform a quick internal test for slot 0 or 1\n\n"
-  " AES_PROG [<options>] --key passphrase --out out_file in_file\n"
-  "Options are:\n"
-  "  --help\n"
-  "  --algorithm ALG   Use algorithm ALG. Not implelemented yet\n"
-  "  --decrypt         Decrypt the file given on the command line\n"
-  "  --slot rm_slot    Set slot to rm_slot: 0 or 1. Default 0\n"
-  "  --out out_file    Write output to file\n"
-  "  --key passphrase  Use passphrase or passphrase file\n";
+	" AES_PROG (0|1) preform a quick internal test for slot 0 or 1\n\n"
+	" AES_PROG [<options>] --key passphrase --out out_file --in in_file\n"
+	"Options :\n"
+	"	-h, --help\n"
+	"	-d, --decrypt			Decrypt the file given on the command line\n"
+	"	-s, --slot rm_slot		Set slot to rm_slot: 0 or 1. Default 0\n"
+	"	-i, --in in_file		Input file for the application\n"
+	"	-o, --out out_file		Write output to file\n"
+	"	-k, --key passphrase	Use passphrase or passphrase file\n"
+	"Example : 	aes192 -s 0 -k encryption_key.bin -i input.bin -o output.bin (to encrypt a file)\n"
+	"			aes192 -d -s 0 -k decryption_key.bin -i input.bin -o output.bin (to decrypt a file)\n\n";
 
-void
-usage(const char *msg)
+void usage(const char *msg)
 {
 	fprintf(stderr, "%s\n%s", msg, help_usage);
+	exit(0);
 }
 
 struct key_buf
@@ -278,12 +279,9 @@ main(int argc, char *argv[])
 
 	memset(&kbuf, 0, sizeof (struct key_buf));
 	kbuf.kb_enc = 1; 	// 1 - to encrypt. Default
-	while ((opt = getopt_long(argc, argv, "ha:dk:o:s:",
+	while ((opt = getopt_long(argc, argv, "hdk:o:s:i:",
 				  long_opt, NULL)) != -1)
 		switch (opt) {
-		case 'a':
-			// combine AES128, AES192, etc.
-			break;
 		case 'd':
 			// 0 - to Decrypt
 			kbuf.kb_enc = 0;
@@ -297,18 +295,16 @@ main(int argc, char *argv[])
 		case 's':
 			slot = atoi(optarg);
 			break;
+		case 'i':
+			in_file = optarg;
+			break;
 		case 'h':
 		default:
 			usage("getopt");
 		}
 
-
-	if (!key_file || !out_file)
-		die("missing passphrase and/or output file");
-
-	if (optind >= argc)
-		die("Expected filename after options");
-	in_file = argv[argc-1];
+	if (!key_file || !out_file || !in_file)
+		die("missing passphrase and/or output file and/or input file");
 
 	infd = open(in_file, O_RDONLY, 0);
 	if (infd == -1)
