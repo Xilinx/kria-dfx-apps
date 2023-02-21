@@ -169,11 +169,11 @@ int internal_test(int slot)
 	// Write Decryption Key of Size 32 bytes (4bytes x 8 )
 	std::memcpy(vptr+DKB_OFFSET, &decryptionkeybuff, sizeof(decryptionkeybuff));
 	// Write Encryption Key of Size 32 bytes (4bytes x 8 )
-    std::memcpy(vptr+EKB_OFFSET, &encryptionkeybuff, sizeof(encryptionkeybuff));
+	std::memcpy(vptr+EKB_OFFSET, &encryptionkeybuff, sizeof(encryptionkeybuff));
 	// Write Encrypted Buffer of Size 256 bytes (4bytes x 64 )
-    std::memcpy(vptr+EB_OFFSET, &encryptedbuff, sizeof(encryptedbuff));
+	std::memcpy(vptr+EB_OFFSET, &encryptedbuff, sizeof(encryptedbuff));
 	// Write Decrypted Buffer of Size 256 bytes (4bytes x 64 )
-    std::memcpy(vptr+DB_OFFSET, &decryptedbuff, sizeof(decryptedbuff));
+	std::memcpy(vptr+DB_OFFSET, &decryptedbuff, sizeof(decryptedbuff));
 	
 	printf("AES192 TEST on Slot %d:\n",slot);
 	//Initialize AES192
@@ -235,19 +235,22 @@ static struct option const long_opt[] =
 };
 
 static const char help_usage[] =
-  " AES_PROG (0|1)\n"
-  "   preform a quick internal test for slot 0 or 1\n\n"
-  " AES_PROG [<options>] --key passphrase --out out_file in_file\n"
-  "Options are:\n"
-  "  --help\n"
-  "  --decrypt         Decrypt the file given on the command line\n"
-  "  --slot rm_slot    Set slot to rm_slot: 0 or 1. Default 0\n"
-  "  --out out_file    Write output to file\n"
-  "  --key passphrase  Use passphrase or passphrase file\n";
+	" AES_PROG (0|1) preform a quick internal test for slot 0 or 1\n\n"
+	" AES_PROG [<options>] --key passphrase --out out_file --in in_file\n"
+	"Options :\n"
+	"	-h, --help\n"
+	"	-d, --decrypt			Decrypt the file given on the command line\n"
+	"	-s, --slot rm_slot		Set slot to rm_slot: 0 or 1. Default 0\n"
+	"	-i, --in in_file		Input file for the application\n"
+	"	-o, --out out_file		Write output to file\n"
+	"	-k, --key passphrase	Use passphrase or passphrase file\n"
+	"Example : 	aes192 -s 0 -k encryption_key.bin -i input.bin -o output.bin (to encrypt a file)\n"
+	"			aes192 -d -s 0 -k decryption_key.bin -i input.bin -o output.bin (to decrypt a file)\n\n";
 
 void usage(const char *msg)
 {
 	fprintf(stderr, "%s\n%s", msg, help_usage);
+	exit(0);
 }
 
 struct key_buf

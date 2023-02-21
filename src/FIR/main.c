@@ -172,22 +172,22 @@ static struct option const long_opt[] =
 	{ "slot",	required_argument, 	NULL, 's'},
 	{ "config",	required_argument, 	NULL, 'c'},
 	{ "reload",	required_argument, 	NULL, 'r'},
-	{ "input",	required_argument, 	NULL, 'i'},
+	{ "in",		required_argument, 	NULL, 'i'},
 	{ "out",	required_argument, 	NULL, 'o'},
 	{ NULL, 0, NULL, 0}
 };
 
 static const char help_usage[] =
-	"Usage FIR_PROG [<options>] --slot rm_slot --config filename --reload filename --output filename --input filename\n"
-	" FIR_PROG (0|1) preform a quick internal test for slot 0 or 1\n\n"
-	"Options are:\n"
+	" FIR_PROG (0|1) preform a quick internal test for slot 0 or 1\n"
+	" FIR_PROG [<options>] --slot rm_slot --config filename --reload filename --out filename --in filename\n"
+	"Options :\n"
 	"  -h, --help\n"
 	"  -s, --slot rm_slot		Set slot to rm_slot: 0 or 1. Default 0\n"
 	"  -c, --config filename	Use config file\n"
 	"  -r, --reload filename	Use reload file\n"
-	"  -i, --input filename		Input file to the program\n"
-	"  -o, --out filename		Write output to file\n\n"
-	"Example : fir -s 0 -c config.bin -r reload.bin -o output.bin -i input.bin";
+	"  -i, --in filename		Input file to the program\n"
+	"  -o, --out filename		Write output to file\n"
+	"Example : fir -s 0 -c config.bin -r reload.bin -o output.bin -i input.bin\n\n";
 
 void usage(const char *msg)
 {
@@ -252,6 +252,9 @@ int main(int argc, char *argv[])
 	if (fstat(infd, &statbuf))
 		die("fstat(%s)", in_file);
 	size_t in_len = statbuf.st_size;
+	if ((in_len < 16) || (in_len > (SIZE_IN_BYTES - RESULT_OFFSET_MEM)))
+		die("file size %lu is out of demo range [16, %u]", in_len,
+			SIZE_IN_BYTES - RESULT_OFFSET_MEM);
 	char *in_mm = (char *)mmap(NULL, in_len, PROT_READ, MAP_SHARED, infd, 0);
 
 	configfd = open(config_file, O_RDONLY, 0);
