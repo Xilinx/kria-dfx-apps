@@ -50,6 +50,10 @@ The repository structure is outlined below.
 	  * FIR_out_data.bin 
 	  * FIR_reload.bin
 
+Please refer to man pages of the application for usage and more details
+```
+./src/AES128/aes128 -h
+```
 
 Steps to test and run the applications
 ```
