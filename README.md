@@ -57,9 +57,8 @@ Applications
 	1. slot ( -s or --slot ) - slot_no in which the accelerator is loaded ( 0 or 1 ) 
 	2. key ( -k or --key ) - key or passphrase to be used by AES128 algorithm ( 32 bytes )
 	3. input file ( -i or --in ) - data that need to be encrypted or decrypted ( > 16 bytes )
-	4. output file ( -o or --out ) - file name to store the data recieved from the algorithm
-	5. -d or --decrypt flag is required for decrpytion
-	no flag is required for encrpytion
+	4. output file ( -o or --out ) - file name to store the output data recieved from the algorithm
+	5. -d or --decrypt flag is required for decrpytion. No flag is required for encrpytion
 
 	Usage example - sudo ./aes128 -s 0 -k AES128_dec_key.bin -i AES128_in_data.bin -o AES128_res_data.bin -d
 
@@ -69,9 +68,8 @@ Applications
 	1. slot ( -s or --slot ) - slot_no in which the accelerator is loaded ( 0 or 1 ) 
 	2. key ( -k or --key ) - key or passphrase to be used by AES192 algorithm ( 32 bytes )
 	3. input file ( -i or --in ) - data that need to be encrypted or decrypted ( > 16 bytes )
-	4. output file ( -o or --out ) - file name to store the data recieved from the algorithm
-	5. -d or --decrypt flag is required for decrpytion
-	no flag is required for encrpytion
+	4. output file ( -o or --out ) - file name to store the output data recieved from the algorithm
+	5. -d or --decrypt flag is required for decrpytion. No flag is required for encrpytion
 
 	Usage example - sudo ./aes192 -s 0 -k AES192_dec_key.bin -i AES192_in_data.bin -o AES192_res_data.bin -d
 
@@ -81,7 +79,7 @@ Applications
 	1. slot ( -s or --slot ) - slot_no in which the accelerator is loaded ( 0 or 1 ) 
 	2. FFT configuration file ( -c or --config ) - data that is needed to configure the FFT accelerator ( 16 bytes )
 	3. input file ( -i or --in ) - input data for FFT accelerator 
-	4. output file ( -o or --out ) - file name to store the outputdata recieved from the FFT accelerator
+	4. output file ( -o or --out ) - file name to store the output data recieved from the FFT accelerator
 
 	Usage example - sudo ./fft -s 0 -c FFT_config.bin -i FFT_in_data.bin -o FFT_res_data.bin
 
