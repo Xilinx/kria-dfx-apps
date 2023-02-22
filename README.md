@@ -57,7 +57,7 @@ Please use -h flag for the applications for usage and more details
 
 Steps to test and run the applications
 ```
-git clone https://gitenterprise.xilinx.com/SOM/kria-dfx-apps.git
+git clone -b main https://gitenterprise.xilinx.com/SOM/kria-dfx-apps.git
 cd kria-dfx-apps
 mkdir bld; cd bld
 cmake ..; make
