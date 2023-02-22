@@ -50,10 +50,51 @@ The repository structure is outlined below.
 	  * FIR_out_data.bin 
 	  * FIR_reload.bin
 
-Please use -h flag for the applications for usage and more details
-```
-./src/AES128/aes128 -h
-```
+Applications
+
+1. AES128 - an application for encrypting and decrypting data
+	requirements (to be passed to the application as command line arguments)
+	1. slot ( -s or --slot ) - slot_no in which the accelerator is loaded ( 0 or 1 ) 
+	2. key ( -k or --key ) - key or passphrase to be used by AES128 algorithm ( 32 bytes )
+	3. input file ( -i or --in ) - data that need to be encrypted or decrypted ( > 16 bytes )
+	4. output file ( -o or --out ) - file name to store the data recieved from the algorithm
+	5. -d or --decrypt flag is required for decrpytion
+	no flag is required for encrpytion
+
+	Usage example - sudo ./aes128 -s 0 -k AES128_dec_key.bin -i AES128_in_data.bin -o AES128_res_data.bin -d
+
+
+2. AES192 - an application for encrypting and decrypting data
+	requirements (to be passed to the application as command line arguments) 
+	1. slot ( -s or --slot ) - slot_no in which the accelerator is loaded ( 0 or 1 ) 
+	2. key ( -k or --key ) - key or passphrase to be used by AES192 algorithm ( 32 bytes )
+	3. input file ( -i or --in ) - data that need to be encrypted or decrypted ( > 16 bytes )
+	4. output file ( -o or --out ) - file name to store the data recieved from the algorithm
+	5. -d or --decrypt flag is required for decrpytion
+	no flag is required for encrpytion
+
+	Usage example - sudo ./aes192 -s 0 -k AES192_dec_key.bin -i AES192_in_data.bin -o AES192_res_data.bin -d
+
+ 
+3. FFT - an application performing 4-channel Fast Fourier Transform
+	requirements (to be passed to the application as command line arguments)
+	1. slot ( -s or --slot ) - slot_no in which the accelerator is loaded ( 0 or 1 ) 
+	2. FFT configuration file ( -c or --config ) - data that is needed to configure the FFT accelerator ( 16 bytes )
+	3. input file ( -i or --in ) - input data for FFT accelerator 
+	4. output file ( -o or --out ) - file name to store the outputdata recieved from the FFT accelerator
+
+	Usage example - sudo ./fft -s 0 -c FFT_config.bin -i FFT_in_data.bin -o FFT_res_data.bin
+
+4. FIR - an application for filtering signals using FIR
+	requirements (to be passed to the application as command line arguments)
+	1. slot ( -s or --slot ) - slot_no in which the accelerator is loaded ( 0 or 1 ) 
+	2. FIR configuration file ( -c or --config ) - data that is needed to configure the FIR accelerator ( 16 bytes )
+	3. FIR reload file ( -r or --reload ) ( 160 bytes )
+	4. input file ( -i or --in ) - input data for FIR accelerator
+	5. output file ( -o or --out ) - file name to store the output data recieved from the FIR accelerator
+
+	Usage example - sudo ./fir -s 1 -c FIR_config.bin -r FIR_reload.bin -i FIR_in_data.bin -o FIR_res_data.bin
+
 
 Steps to test and run the applications
 ```
@@ -77,4 +118,9 @@ diff AES128_out_data.bin AES128_res_data.bin
 diff AES192_out_data.bin AES192_res_data.bin
 diff FIR_out_data.bin FIR_res_data.bin
 diff FFT_out_data.bin FFT_res_data.bin
+```
+
+Please use -h flag with the applications for usage and more details
+```
+./aes128 -h
 ```
