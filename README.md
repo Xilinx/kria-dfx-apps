@@ -53,6 +53,17 @@ The repository structure is outlined below.
 Applications
 
 1. AES128 - an application for encrypting and decrypting data
+	
+	Application runs an internal test when no arguments or only slot is passed as argument. 
+	
+	Internal test consists of pre-defined test cases
+	
+	Example - 
+	```
+	sudo ./aes128 // runs test on slot 0
+	sudo ./aes128 1 // runs test on slot 1
+	```
+	
 	requirements (to be passed to the application as command line arguments)
 	1. slot ( -s or --slot ) - slot_no in which the accelerator is loaded ( 0 or 1 ) 
 	2. key ( -k or --key ) - key or passphrase to be used by AES128 algorithm ( 32 bytes )
@@ -60,10 +71,21 @@ Applications
 	4. output file ( -o or --out ) - file name to store the output data recieved from the algorithm
 	5. -d or --decrypt flag is required for decrpytion. No flag is required for encrpytion
 
-	Usage example - sudo ./aes128 -s 0 -k AES128_dec_key.bin -i AES128_in_data.bin -o AES128_res_data.bin -d
+	Usage example - ```sudo ./aes128 -s 0 -k AES128_dec_key.bin -i AES128_in_data.bin -o AES128_res_data.bin -d```
 
 
 2. AES192 - an application for encrypting and decrypting data
+
+	Application runs an internal test when no arguments or only slot is passed as argument. 
+	
+	Internal test consists of pre-defined test cases
+	
+	Example - 
+	```
+	sudo ./aes192 // runs test on slot 0
+	sudo ./aes192 1 // runs test on slot 1
+	```
+
 	requirements (to be passed to the application as command line arguments) 
 	1. slot ( -s or --slot ) - slot_no in which the accelerator is loaded ( 0 or 1 ) 
 	2. key ( -k or --key ) - key or passphrase to be used by AES192 algorithm ( 32 bytes )
@@ -71,19 +93,41 @@ Applications
 	4. output file ( -o or --out ) - file name to store the output data recieved from the algorithm
 	5. -d or --decrypt flag is required for decrpytion. No flag is required for encrpytion
 
-	Usage example - sudo ./aes192 -s 0 -k AES192_dec_key.bin -i AES192_in_data.bin -o AES192_res_data.bin -d
+	Usage example - ```sudo ./aes192 -s 0 -k AES192_dec_key.bin -i AES192_in_data.bin -o AES192_res_data.bin -d```
 
  
-3. FFT - an application performing 4-channel Fast Fourier Transform
+3. FFT - an application for performing 4-channel Fast Fourier Transform
+
+	Application runs an internal test when no arguments or only slot is passed as argument. 
+	
+	Internal test consists of pre-defined test cases
+	
+	Example - 
+	```
+	sudo ./fft // runs test on slot 0
+	sudo ./fft 1 // runs test on slot 1
+	```
+
 	requirements (to be passed to the application as command line arguments)
 	1. slot ( -s or --slot ) - slot_no in which the accelerator is loaded ( 0 or 1 ) 
 	2. FFT configuration file ( -c or --config ) - data that is needed to configure the FFT accelerator ( 16 bytes )
 	3. input file ( -i or --in ) - input data for FFT accelerator 
 	4. output file ( -o or --out ) - file name to store the output data recieved from the FFT accelerator
 
-	Usage example - sudo ./fft -s 0 -c FFT_config.bin -i FFT_in_data.bin -o FFT_res_data.bin
+	Usage example - ```sudo ./fft -s 0 -c FFT_config.bin -i FFT_in_data.bin -o FFT_res_data.bin```
 
 4. FIR - an application for filtering signals using FIR
+
+	Application runs an internal test when no arguments or only slot is passed as argument. 
+	
+	Internal test consists of pre-defined test cases
+	
+	Example - 
+	```
+	sudo ./fir // runs test on slot 0
+	sudo ./fir 1 // runs test on slot 1    
+	```
+	
 	requirements (to be passed to the application as command line arguments)
 	1. slot ( -s or --slot ) - slot_no in which the accelerator is loaded ( 0 or 1 ) 
 	2. FIR configuration file ( -c or --config ) - data that is needed to configure the FIR accelerator ( 16 bytes )
@@ -91,15 +135,19 @@ Applications
 	4. input file ( -i or --in ) - input data for FIR accelerator
 	5. output file ( -o or --out ) - file name to store the output data recieved from the FIR accelerator
 
-	Usage example - sudo ./fir -s 1 -c FIR_config.bin -r FIR_reload.bin -i FIR_in_data.bin -o FIR_res_data.bin
+	Usage example - ```sudo ./fir -s 1 -c FIR_config.bin -r FIR_reload.bin -i FIR_in_data.bin -o FIR_res_data.bin```
 
 
-Steps to test and run the applications
+Steps to build the applications
 ```
 git clone -b main https://gitenterprise.xilinx.com/SOM/kria-dfx-apps.git
 cd kria-dfx-apps
 mkdir bld; cd bld
 cmake ..; make
+```
+
+Steps to run the application
+```
 sudo xmutil unloadapp
 sudo xmutil loadapp AES128
 sudo ./src/AES128/aes128 -s 0 -k ../src/data/AES128_dec_key.bin -i ../src/data/AES128_in_data.bin -o ../src/data/AES128_res_data.bin -d
@@ -111,6 +159,10 @@ sudo ./src/AES192/aes192 -s 1 -k ../src/data/AES192_dec_key.bin -i ../src/data/A
 sudo xmutil unloadapp 
 sudo xmutil loadapp FFT
 sudo ./src/FFT/fft -c ../src/data/FFT_config.bin -i ../src/data/FFT_in_data.bin -o ../src/data/FFT_res_data.bin
+```
+
+Check if the expected and resultant data matches or not
+```
 cd ../src/data
 diff AES128_out_data.bin AES128_res_data.bin
 diff AES192_out_data.bin AES192_res_data.bin
