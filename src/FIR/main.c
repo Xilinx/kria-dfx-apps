@@ -83,7 +83,7 @@ uint32_t resultbuff[] = {
 void isTestPassed(uint32_t *vptr)
 {
 	for (int i=0; i < 16; i++)					//Copying out data to resultbuff for comparison with golden data
-	{ 	resultbuff[i] = vptr[i+17820];
+	{ 	resultbuff[i] = vptr[i+1052];
 	}
 	int same_flag = 1;
 	for (int i=0; i< 16; i++)					//Comparing result buffer with refernece fir_data_out
@@ -195,12 +195,6 @@ void usage(const char *msg)
 	exit(0);
 }
 
-struct config_buf
-{
-	char kb_config[16];	/* AES128 : 16 * 8 = 192 */
-	int  kb_pad[3];	/* must be 0 ? */
-};
-
 int main(int argc, char *argv[])
 {
 	char *config_file = NULL;
@@ -240,11 +234,20 @@ int main(int argc, char *argv[])
 			break;
 		case 'h':
 		default:
-			usage("getopt");
+			usage(" Usage:");
 		}
 
-	if (!config_file || !out_file || !reload_file || !in_file)
-		die("missing config and/or output file and/or reload file and/or input file");
+	if (!config_file)
+		die("Missing config file. Use \"-h\" for usage and more information");
+
+	if(!reload_file)
+		die("Missing reload file. Use \"-h\" for usage and more information");
+
+	if(!in_file)
+		die("Missing input file. Use \"-h\" for usage and more information");
+
+	if(!out_file)
+		die("Missing output file. Use \"-h\" for usage and more information");
 	
 	infd = open(in_file, O_RDONLY, 0);
 	if (infd == -1)
@@ -278,8 +281,6 @@ int main(int argc, char *argv[])
 	if (outfd == -1)
 		die("open(%s)", out_file);
 
-	printf("in_file, sz, out_file = %s, %ld, %s\n",
-		in_file, statbuf.st_size, out_file);
 
 	//Initialize and memory map RMs
 	if(InitializeMapRMs(slot) == -1)
@@ -296,6 +297,8 @@ int main(int argc, char *argv[])
 	// Write to the memory that was mapped, use devmem from
 	// the command line of Linux to verify it worked
 
+	printf("FIR application running on Slot %d:\n",slot);
+
 	// Write the config and the data
 	memcpy(vptr + RELOAD_OFFSET, reload_mm, reload_len);
 	memcpy(vptr + CONFIG_OFFSET, config_mm, config_len);
@@ -306,26 +309,26 @@ int main(int argc, char *argv[])
 	status = DataToAccelDone(slot);
 	if (!status)
 		die("DataToAccelDone(%d)", slot);
-	printf("\t Configure Reload data done.\n");
+	printf("Configure Reload data done.\n");
 
 	//Config data with TID 2
 	DataToAccel(slot, CONFIG_OFFSET_MEM, config_len>>4, TID_2);
 	status = DataToAccelDone(slot);
 	if (!status)
 		die("DataToAccelDone(%d)", slot);
-	printf("\t Configure Config data done.\n");
+	printf("Configure Config data done.\n");
 
 	//Config fir input data with TID 0
 	DataToAccel(slot, INPUT_OFFSET_MEM, in_len>>4, TID_0);
-	printf("\t Configure FIR Input data done.\n");
+	printf("Configure FIR Input data done.\n");
 	
 	//Config fir output data
 	DataFromAccel(slot, RESULT_OFFSET_MEM, in_len>>4);
-	sleep(2);							//Time added for completion of FIR before reading the out data
 	status = DataFromAccelDone(slot);
 	if (!status)
 		die("DataToAccelDone(%d)", slot);
-	printf("\t Data from Accel done.\n");
+	printf("Data from Accel done.\n");
+	printf("FIR operation done\n");
 
 	const void *cvp = (const void *)(uvp + RESULT_OFFSET_MEM);
 	// write only the original size
