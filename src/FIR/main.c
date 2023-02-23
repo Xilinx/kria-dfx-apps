@@ -34,7 +34,7 @@
 #define RELOAD_OFFSET_MEM	0x0 	//Reload Mem Offset in Hex
 #define RELOAD_SIZE			0xA		//Size of Reload Buffer in multiples of 16 bytes. (10d*16 bytes = 160 bytes)
 
-#define RESULT_OFFSET_MEM	0x11000	//Result Buffer Mem Offset in Hex
+#define RESULT_OFFSET_MEM	0x400	//Result Buffer Mem Offset in Hex
 #define RESULT_SIZE			0x1000	//Result Buffer Mem Offset in Hex
 
 #define TID_0				0x0		//TID 0
@@ -83,7 +83,7 @@ uint32_t resultbuff[] = {
 void isTestPassed(uint32_t *vptr)
 {
 	for (int i=0; i < 16; i++)					//Copying out data to resultbuff for comparison with golden data
-	{ 	resultbuff[i] = vptr[i+17820];
+	{ 	resultbuff[i] = vptr[i+1052];
 	}
 	int same_flag = 1;
 	for (int i=0; i< 16; i++)					//Comparing result buffer with refernece fir_data_out
