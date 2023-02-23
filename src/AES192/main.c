@@ -19,7 +19,7 @@
 #include "experimental/xrt_device.h"
 #include "experimental/xrt_kernel.h"
 
-#define SIZE_IN_BYTES       0x4000000	//64MB
+#define SIZE_IN_BYTES		0x4000000	//64MB
 
 #define ENCR_DECR_RESULT 	192		//Result of encryption/decryption is stored at offset 0x300 (768d = 192*4) as address increments by 32bit or 4 bytes at a time
 #define COMPARE_SIZE		0x100 	//Compare 0x100 (256d) bytes between result and golden data. 
@@ -225,27 +225,28 @@ int internal_test(int slot)
 
 static struct option const long_opt[] =
 {
-	{ "help",             no_argument, NULL, 'h'},
-	{ "decrypt",          no_argument, NULL, 'd'},
-	{ "key",        required_argument, NULL, 'k'},
-	{ "in",         required_argument, NULL, 'i'},
-	{ "out",        required_argument, NULL, 'o'},
-	{ "slot",       required_argument, NULL, 's'},
+	{ "help",		no_argument, NULL, 'h'},
+	{ "decrypt",	no_argument, NULL, 'd'},
+	{ "key",		required_argument, NULL, 'k'},
+	{ "in",			required_argument, NULL, 'i'},
+	{ "out",		required_argument, NULL, 'o'},
+	{ "slot",		required_argument, NULL, 's'},
 	{ NULL, 0, NULL, 0}
 };
 
 static const char help_usage[] =
 	" AES_PROG (0|1) preform a quick internal test for slot 0 or 1\n\n"
 	" AES_PROG [<options>] --key passphrase --out out_file --in in_file\n"
-	"Options :\n"
+	" Options :\n"
 	"	-h, --help\n"
 	"	-d, --decrypt			Decrypt the file given on the command line\n"
 	"	-s, --slot rm_slot		Set slot to rm_slot: 0 or 1. Default 0\n"
 	"	-i, --in in_file		Input file for the application\n"
 	"	-o, --out out_file		Write output to file\n"
 	"	-k, --key passphrase	Use passphrase or passphrase file\n"
-	"Example : 	aes192 -s 0 -k encryption_key.bin -i input.bin -o output.bin (to encrypt a file)\n"
-	"			aes192 -d -s 0 -k decryption_key.bin -i input.bin -o output.bin (to decrypt a file)\n\n";
+	" Example : \n"
+	"	sudo ./aes192 -s 0 -k encryption_key.bin -i input.bin -o output.bin (to encrypt a file)\n"
+	"	sudo ./aes192 -d -s 0 -k decryption_key.bin -i input.bin -o output.bin (to decrypt a file)\n\n";
 
 void usage(const char *msg)
 {
@@ -257,11 +258,9 @@ struct key_buf
 {
 	char kb_key[24];	/* AES192 : 24 * 8 = 192 */
 	int  kb_enc;	/* 1 - encrypt; 0 - decrypt */
-	int  kb_pad;	/* must be 0 ? */
 };
 
-int
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	struct key_buf kbuf;
 	char *key_file = NULL;
@@ -300,11 +299,17 @@ main(int argc, char *argv[])
 			break;
 		case 'h':
 		default:
-			usage("getopt");
+			usage(" Usage:");
 		}
 
-	if (!key_file || !out_file || !in_file)
-		die("missing passphrase and/or output file and/or input file");
+	if (!key_file)
+		die("Missing key_file or passphrase. Use \"-h\" for usage and more information");
+
+	if(!in_file)
+		die("Missing input file. Use \"-h\" for usage and more information");
+
+	if(!out_file)
+		die("Missing output file. Use \"-h\" for usage and more information");
 
 	infd = open(in_file, O_RDONLY, 0);
 	if (infd == -1)
@@ -335,10 +340,6 @@ main(int argc, char *argv[])
 	if (outfd == -1)
 		die("open(%s)", out_file);
 
-	printf("in_file, sz, out_file = %s, %ld %s\n",
-		in_file, statbuf.st_size, out_file);
-	printf("slot, passphrase = %d, %s\n", slot, kbuf.kb_key);
-
 	char *in_mm = (char *)mmap(NULL, len, PROT_READ, MAP_SHARED, infd, 0);
 
 	//Initialize and memory map RMs
@@ -360,8 +361,7 @@ main(int argc, char *argv[])
 	memcpy(vptr + EKB_OFFSET, &kbuf, sizeof(kbuf));
 	memcpy(vptr +  DB_OFFSET, in_mm, len);
 
-	printf("AES192 in slot %d to %s file %s\n\tout: %s\n", slot,
-		kbuf.kb_enc ? "Encrypt" : "Decrypt", in_file, out_file);
+	printf("AES192 application running on Slot %d:\n",slot);
 	//Initialize AES192
 	StartAccel(slot);
 
@@ -376,6 +376,11 @@ main(int argc, char *argv[])
 	status = DataFromAccelDone(slot);
 	if (!status)
 		die("DataFromAccelDone(%d)", slot);
+
+	if (kbuf.kb_enc)
+		printf("AES192 encryption done\n");
+	else 
+		printf("AES192 decryption done\n");
 
 	const void *cvp = (const void *)(uvp + DB_OFFSET_MEM);
 	// write only the original size

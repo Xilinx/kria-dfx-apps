@@ -239,11 +239,17 @@ int main(int argc, char *argv[])
 			break;
 		case 'h':
 		default:
-			usage("getopt");
+			usage(" Usage:");
 		}
 
-	if (!config_file || !out_file || !in_file)
-		die("missing config and/or output file and/or input file");
+	if (!config_file)
+		die("Missing config file. Use \"-h\" for usage and more information");
+
+	if(!in_file)
+		die("Missing input file. Use \"-h\" for usage and more information");
+
+	if(!out_file)
+		die("Missing output file. Use \"-h\" for usage and more information");
 	
 	infd = open(in_file, O_RDONLY, 0);
 	if (infd == -1)
@@ -254,7 +260,6 @@ int main(int argc, char *argv[])
 	if ((in_len < 16) || (in_len > (SIZE_IN_BYTES - RESULT_OFFSET_MEM)))
 	die("file size %lu is out of demo range [16, %u]", in_len,
 		SIZE_IN_BYTES - RESULT_OFFSET_MEM);
-
 	char *in_mm = (char *)mmap(NULL, in_len, PROT_READ, MAP_SHARED, infd, 0);
 
 	configfd = open(config_file, O_RDONLY, 0);
@@ -270,8 +275,6 @@ int main(int argc, char *argv[])
 	if (outfd == -1)
 		die("open(%s)", out_file);
 
-	printf("in_file, sz, out_file = %s, %ld %s\n",
-		in_file, statbuf.st_size, out_file);
 
 	//Initialize and memory map RMs
 	if(InitializeMapRMs(slot) == -1)
@@ -288,6 +291,8 @@ int main(int argc, char *argv[])
 	// Write to the memory that was mapped, use devmem from
 	// the command line of Linux to verify it worked
 
+	printf("FFT application running on Slot %d:\n",slot);
+
 	// Write the config and input data
 	memcpy(vptr + CONFIG_OFFSET, config_mm, config_len);
 	memcpy(vptr + ONE_KB, in_mm, in_len);
@@ -300,20 +305,21 @@ int main(int argc, char *argv[])
 		status = DataToAccelDone(slot);
 		if (!status)
 			die("DataToAccelDone(%d)", slot);
-		printf("\t Configure FFT Ch%d done.\n", i);
+		printf("Configure FFT Ch%d done.\n", i);
 	}
 	
 	//Config FFT Data In
  	//Config S2MM data
 	//Arguments: (int slot, uint64_t offset, uint64_t size)
 	DataToAccel(slot, FFT_DATA_IN_OFFSET_MEM, in_len>>4, TID_0);
-	printf("\t Configure FFT data done.\n");
+	printf("Configure FFT data done.\n");
 
 	DataFromAccel(slot, RESULT_OFFSET_MEM, in_len>>4);
 	status = DataFromAccelDone(slot);
 	if (!status)
 		die("DataFromAccelDone(%d)", slot);
-	printf("\t Data from Accel done.\n");
+	printf("Data from Accel done.\n");
+	printf("FFT operation done\n");
 
 	const void *cvp = (const void *)(uvp + RESULT_OFFSET_MEM);
 	// write only the original size
