@@ -13,6 +13,7 @@ The repository structure is outlined below.
 	  * reload_lpf.bin
 	* images - Directory containing input data file that is fed to Jupyter notebooks that demonstrate encryption and decryption.
 		* andromeda.jpg
+		* ml-inference.png
 	* lib - Directory containing SIHA helper library used by Jupyter notebooks only.
 	  * libsiha.so
 	  * siha.c
@@ -22,6 +23,7 @@ The repository structure is outlined below.
 	* AES128.ipynb
 	* AES192.ipynb
 	* AES_On_HW_vs_SW.ipynb
+	* dfx-ml-inference.ipynb
 	* pad.py  - helper python script to pad data to align the data to byte boundary
 	* siha.py - wrapper python script to use the helper functionlity provided by libsiha.so from lib directory.
 * src - Directory containing example applications
@@ -33,3 +35,7 @@ The repository structure is outlined below.
 	  * main.c
 	* FIR - Directory containing FIR application source.
 	  * main.c
+	* dfx-ml-inference 
+	  * config 
+	  * lib 
+	  * vitis_ai_library 
