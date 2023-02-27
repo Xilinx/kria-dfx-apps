@@ -38,9 +38,9 @@
 #define TID_1				0x1		//TID 1
 
 #define die(fmt, args ...) do { fprintf(stderr, \
-	    "ERROR:%s():%u " fmt ": %s\n", \
-	    __func__, __LINE__, ##args, errno ? strerror(errno) : ""); \
-	    exit(EXIT_FAILURE); \
+		"ERROR:%s():%u " fmt ": %s\n", \
+		__func__, __LINE__, ##args, errno ? strerror(errno) : ""); \
+		exit(EXIT_FAILURE); \
 	} while (0)
 
 int InitializeMapRMs(int slot);
@@ -235,15 +235,15 @@ static struct option const long_opt[] =
 };
 
 static const char help_usage[] =
-	" AES_PROG (0|1) preform a quick internal test for slot 0 or 1\n\n"
-	" AES_PROG [<options>] --key passphrase --out out_file --in in_file\n"
+	" aes192 (0|1) preform a quick internal test for slot 0 or 1\n"
+	" aes192 [<options>] --key passphrase --out out_file --in in_file\n"
 	" Options :\n"
 	"	-h, --help\n"
-	"	-d, --decrypt			Decrypt the file given on the command line\n"
-	"	-s, --slot rm_slot		Set slot to rm_slot: 0 or 1. Default 0\n"
-	"	-i, --in in_file		Input file for the application\n"
-	"	-o, --out out_file		Write output to file\n"
-	"	-k, --key passphrase	Use passphrase or passphrase file\n"
+	"	-d, --decrypt			Decrypt the file given on the command line. (Optional) Default operation is encryption if this flag is not provided\n"
+	"	-s, --slot rm_slot		Set slot to rm_slot: 0 or 1. (Optional) Default slot is 0 if this flag is not provided\n"
+	"	-i, --in in_file		Input file for the application (Required)\n"
+	"	-o, --out out_file		Write output to file (Required)\n"
+	"	-k, --key passphrase	Use passphrase or passphrase file (Required)\n"
 	" Example : \n"
 	"	sudo ./aes192 -s 0 -k encryption_key.bin -i input.bin -o output.bin (to encrypt a file)\n"
 	"	sudo ./aes192 -d -s 0 -k decryption_key.bin -i input.bin -o output.bin (to decrypt a file)\n\n";
@@ -266,7 +266,7 @@ int main(int argc, char *argv[])
 	char *key_file = NULL;
 	char *in_file  = NULL;
 	char *out_file = NULL;
-	struct stat statbuf;
+	struct stat statbuf, statkey;
 	char *line;
 	int slot = 0, infd = -1, outfd = -1, pwfd = -1;
 	int rc, opt;
@@ -311,36 +311,35 @@ int main(int argc, char *argv[])
 	if(!out_file)
 		die("Missing output file. Use \"-h\" for usage and more information");
 
-	infd = open(in_file, O_RDONLY, 0);
-	if (infd == -1)
-		die("open(%s)", in_file);
-
-	if (fstat(infd, &statbuf))
-		die("fstat(%s)", in_file);
-
 	pwfd = open(key_file, O_RDONLY, 0);
 	if (pwfd == -1)
 		die("open(%s)", key_file);
-
+	if (fstat(pwfd, &statkey))
+		die("open(%s)", key_file);
+	size_t key_len = statkey.st_size;
+	if (key_len < 24)
+		die("Passphrase file size is less than 192 bits");
 	rc = read(pwfd, kbuf.kb_key, sizeof (kbuf.kb_key));
 	if (rc < 0)
 		die("read(%s)", key_file);
-
 	close(pwfd);
 
-	// Align to 16 byte: len = (statbuf.st_size + 0xFU) & (~0xFU);
+	infd = open(in_file, O_RDONLY, 0);
+	if (infd == -1)
+		die("open(%s)", in_file);
+	if (fstat(infd, &statbuf))
+		die("fstat(%s)", in_file);
 	size_t len = statbuf.st_size;
-
+	// Align to 16 byte: len = (statbuf.st_size + 0xFU) & (~0xFU);
 	if ((len < 16) || (len > (SIZE_IN_BYTES - DB_OFFSET_MEM)))
-		die("file size %lu is out of demo range [16, %u]", len,
+		die("Input file size %lu is out of demo range [16, %u]", len,
 			SIZE_IN_BYTES - DB_OFFSET_MEM);
+	char *in_mm = (char *)mmap(NULL, len, PROT_READ, MAP_SHARED, infd, 0);
 
 	outfd = open(out_file, O_WRONLY | O_CREAT | O_TRUNC,
-		     S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (outfd == -1)
 		die("open(%s)", out_file);
-
-	char *in_mm = (char *)mmap(NULL, len, PROT_READ, MAP_SHARED, infd, 0);
 
 	//Initialize and memory map RMs
 	if(InitializeMapRMs(slot) == -1)
@@ -358,7 +357,7 @@ int main(int argc, char *argv[])
 	// the command line of Linux to verify it worked
 
 	// Write the Key (passphrase) and the data
-	memcpy(vptr + EKB_OFFSET, &kbuf, sizeof(kbuf));
+	memcpy(vptr + DKB_OFFSET, &kbuf, sizeof(kbuf));
 	memcpy(vptr +  DB_OFFSET, in_mm, len);
 
 	printf("AES192 application running on Slot %d:\n",slot);
@@ -366,7 +365,7 @@ int main(int argc, char *argv[])
 	StartAccel(slot);
 
 	// key to Accelerator - 32b (16b x 2) to Offset 32
-	DataToAccel(slot, EKB_OFFSET_MEM, KEYBUFF_SIZE, TID_1);
+	DataToAccel(slot, DKB_OFFSET_MEM , KEYBUFF_SIZE, TID_1);
 	DataToAccel(slot,  DB_OFFSET_MEM,       len>>4, TID_0);
 	status = DataToAccelDone(slot);
 	if (!status)
