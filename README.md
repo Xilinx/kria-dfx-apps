@@ -56,17 +56,17 @@ Applications
 	
 	Application runs an internal test when no arguments or only slot is passed as argument. 
 	
-	Internal test consists of pre-defined test cases
-	
 	Example - 
 	```
-	sudo ./aes128 // runs test on slot 0
-	sudo ./aes128 1 // runs test on slot 1
+	# runs test on slot 0
+	sudo ./aes128
+	# runs test on slot 1
+	sudo ./aes128 1
 	```
 	
 	requirements (to be passed to the application as command line arguments)
 	1. slot ( -s or --slot ) - slot_no in which the accelerator is loaded ( 0 or 1 ) 
-	2. key ( -k or --key ) - key or passphrase to be used by AES128 algorithm ( 32 bytes )
+	2. key ( -k or --key ) - key or passphrase to be used by AES128 algorithm ( 128 bits )
 	3. input file ( -i or --in ) - data that need to be encrypted or decrypted ( > 16 bytes )
 	4. output file ( -o or --out ) - file name to store the output data recieved from the algorithm
 	5. -d or --decrypt flag is required for decrpytion. No flag is required for encrpytion
@@ -78,18 +78,18 @@ Applications
 
 	Application runs an internal test when no arguments or only slot is passed as argument. 
 	
-	Internal test consists of pre-defined test cases
-	
 	Example - 
 	```
-	sudo ./aes192 // runs test on slot 0
-	sudo ./aes192 1 // runs test on slot 1
+	# runs test on slot 0
+	sudo ./aes192
+	# runs test on slot 1
+	sudo ./aes192 1
 	```
 
 	requirements (to be passed to the application as command line arguments) 
 	1. slot ( -s or --slot ) - slot_no in which the accelerator is loaded ( 0 or 1 ) 
-	2. key ( -k or --key ) - key or passphrase to be used by AES192 algorithm ( 32 bytes )
-	3. input file ( -i or --in ) - data that need to be encrypted or decrypted ( > 16 bytes )
+	2. key ( -k or --key ) - key or passphrase to be used by AES192 algorithm ( 192 bits )
+	3. input file ( -i or --in ) - data that need to be encrypted or decrypted ( >= 16 bytes )
 	4. output file ( -o or --out ) - file name to store the output data recieved from the algorithm
 	5. -d or --decrypt flag is required for decrpytion. No flag is required for encrpytion
 
@@ -100,18 +100,18 @@ Applications
 
 	Application runs an internal test when no arguments or only slot is passed as argument. 
 	
-	Internal test consists of pre-defined test cases
-	
 	Example - 
 	```
-	sudo ./fft // runs test on slot 0
-	sudo ./fft 1 // runs test on slot 1
+	# runs test on slot 0
+	sudo ./fft
+	# runs test on slot 1
+	sudo ./fft 1
 	```
 
 	requirements (to be passed to the application as command line arguments)
 	1. slot ( -s or --slot ) - slot_no in which the accelerator is loaded ( 0 or 1 ) 
 	2. FFT configuration file ( -c or --config ) - data that is needed to configure the FFT accelerator ( 16 bytes )
-	3. input file ( -i or --in ) - input data for FFT accelerator 
+	3. input file ( -i or --in ) - input data for FFT accelerator ( >= 64 KB)
 	4. output file ( -o or --out ) - file name to store the output data recieved from the FFT accelerator
 
 	Usage example - ```sudo ./fft -s 0 -c FFT_config.bin -i FFT_in_data.bin -o FFT_res_data.bin```
@@ -124,8 +124,10 @@ Applications
 	
 	Example - 
 	```
-	sudo ./fir // runs test on slot 0
-	sudo ./fir 1 // runs test on slot 1    
+	# runs test on slot 0
+	sudo ./fir
+	# runs test on slot 1
+	sudo ./fir 1
 	```
 	
 	requirements (to be passed to the application as command line arguments)
