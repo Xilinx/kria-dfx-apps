@@ -1,5 +1,5 @@
 #########################################################################
-# Copyright (c) 2022, Xilinx Inc. and Contributors. All rights reserved.
+# Copyright (c) 2023, Xilinx Inc. and Contributors. All rights reserved.
 # SPDX-License-Identifier: MIT
 #########################################################################
 cmake_minimum_required(VERSION 3.21)
