@@ -188,7 +188,7 @@ static const char help_usage[] =
 	"  -i, --in filename		Input file to the program (Required)\n"
 	"  -o, --out filename		Write output to file (Required)\n"
 	" Example : \n"
-	"	fir -s 0 -c config.bin -r reload.bin -o output.bin -i input.bin\n\n";
+	"	fir -s 0 -c config.bin -r reload.bin -i input.bin -o output.bin\n\n";
 
 void usage(const char *msg)
 {

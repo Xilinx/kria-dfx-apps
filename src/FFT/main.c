@@ -198,7 +198,7 @@ static const char help_usage[] =
 	"  -i, --in filename		Input file to the program (Required)\n"
 	"  -o, --out filename		Write output to file (Required)\n"
 	" Example : \n"
-	"	fft -s 0 -c config.bin -o output.bin -i input.bin\n\n";
+	"	fft -s 0 -c config.bin -i input.bin -o output.bin\n\n";
 
 void usage(const char *msg)
 {
@@ -267,8 +267,8 @@ int main(int argc, char *argv[])
 	if (fstat(infd, &statbuf))
 		die("fstat(%s)", in_file);
 	size_t in_len = statbuf.st_size;
-	if ((in_len < 16) || (in_len > (SIZE_IN_BYTES - RESULT_OFFSET_MEM)))
-	die("Input file size %lu is out of demo range [16, %u]", in_len,
+	if ((in_len < 65536) || (in_len > (SIZE_IN_BYTES - RESULT_OFFSET_MEM)))
+	die("Input file size %lu is out of demo range [65536, %u] bytes", in_len,
 		SIZE_IN_BYTES - RESULT_OFFSET_MEM);
 	char *in_mm = (char *)mmap(NULL, in_len, PROT_READ, MAP_SHARED, infd, 0);
 
