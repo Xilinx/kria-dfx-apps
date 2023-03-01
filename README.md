@@ -35,10 +35,6 @@ The repository structure is outlined below.
 	  * main.c
 	* FIR - Directory containing FIR application source.
 	  * main.c
-	* dfx-ml-inference
-          * config
-          * lib
-          * vitis_ai_library
   	* data - Directory containing data files for testing the above applications.
 	  * AES128_dec_key.bin 
 	  * AES128_enc_key.bin 
