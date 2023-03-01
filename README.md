@@ -22,6 +22,8 @@ The repository structure is outlined below.
 	* AES128.ipynb
 	* AES192.ipynb
 	* AES_On_HW_vs_SW.ipynb
+	* dfx-ml-inference.ipynb
+        * dfx-ml-inference_usb.ipynb
 	* pad.py  - helper python script to pad data to align the data to byte boundary
 	* siha.py - wrapper python script to use the helper functionlity provided by libsiha.so from lib directory.
 * src - Directory containing example applications
@@ -33,6 +35,10 @@ The repository structure is outlined below.
 	  * main.c
 	* FIR - Directory containing FIR application source.
 	  * main.c
+	* dfx-ml-inference
+          * config
+          * lib
+          * vitis_ai_library
   	* data - Directory containing data files for testing the above applications.
 	  * AES128_dec_key.bin 
 	  * AES128_enc_key.bin 
