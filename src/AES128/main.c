@@ -235,7 +235,7 @@ static struct option const long_opt[] =
 };
 
 static const char help_usage[] =
-	" aes128 (0|1) preform a quick internal test for slot 0 or 1\n"
+	" aes128 (0|1) perform a quick internal test for slot 0 or 1\n"
 	" aes128 [<options>] --key passphrase --out out_file --in in_file\n"
 	" Options :\n"
 	"	-h, --help\n"
