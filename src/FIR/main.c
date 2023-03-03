@@ -178,7 +178,7 @@ static struct option const long_opt[] =
 };
 
 static const char help_usage[] =
-	" fir (0|1) preform a quick internal test for slot 0 or 1\n"
+	" fir (0|1) perform a quick internal test for slot 0 or 1\n"
 	" fir [<options>] --slot rm_slot --config filename --reload filename --out filename --in filename\n"
 	" Options :\n"
 	"  -h, --help\n"
