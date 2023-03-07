@@ -146,7 +146,7 @@ Applications
 	Usage example - ```sudo ./fir -s 1 -c FIR_config.bin -r FIR_reload.bin -i FIR_in_data.bin -o FIR_res_data.bin```
 
 
-Steps to build the applications
+## Steps to build the applications
 ```
 git clone -b main https://gitenterprise.xilinx.com/SOM/kria-dfx-apps.git
 cd kria-dfx-apps
