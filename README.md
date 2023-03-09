@@ -148,7 +148,7 @@ Applications
 
 ## Steps to build the applications
 ```
-git clone -b main https://gitenterprise.xilinx.com/SOM/kria-dfx-apps.git
+git clone https://gitenterprise.xilinx.com/SOM/kria-dfx-apps.git
 cd kria-dfx-apps
 mkdir bld; cd bld
 cmake ..; make
