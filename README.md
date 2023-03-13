@@ -148,6 +148,7 @@ Applications
 
 ## Steps to build the applications
 ```
+sudo apt install uuid-dev libdfx-dev cmake libdfx-mgr-dev bootgen-xlnx
 git clone https://gitenterprise.xilinx.com/SOM/kria-dfx-apps.git
 cd kria-dfx-apps
 mkdir bld; cd bld
