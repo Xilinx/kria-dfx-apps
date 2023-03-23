@@ -165,13 +165,13 @@ Applications
 ## Steps to build the applications
 ```
 sudo apt install uuid-dev libdfx-dev cmake libdfx-mgr-dev bootgen-xlnx
-git clone https://gitenterprise.xilinx.com/SOM/kria-dfx-apps.git
+git clone https://github.com/Xilinx/kria-dfx-apps
 cd kria-dfx-apps
 mkdir bld; cd bld
 cmake ..; make
 ```
 
-Steps to run the application
+Steps to run the applications
 ```
 sudo xmutil unloadapp
 sudo xmutil loadapp AES128
