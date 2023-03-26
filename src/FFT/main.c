@@ -301,15 +301,30 @@ int main(int argc, char *argv[])
 	memcpy(vptr + ONE_KB, in_mm, in_len);
 
 	// Configure four FFT channels
-	for (int i=1; i<=4; i++)
-	{
-		//Arguments: (int slot, uint64_t offset, uint64_t size, uint8_t tid)
-		DataToAccel(slot, CONFIG_OFFSET_MEM, config_len>>4, i);
-		status = DataToAccelDone(slot);
-		if (!status)
-			die("DataToAccelDone(%d)", slot);
-		printf("Configure FFT Ch%d done.\n", i);
-	}
+	
+	DataToAccel(slot, CONFIG_OFFSET_MEM, config_len>>4, TID_1);
+	status = DataToAccelDone(slot);
+	if (!status)
+		die("DataToAccelDone(%d)", slot);
+	printf("Configure FFT Ch0 done.\n");
+
+	DataToAccel(slot, CONFIG_OFFSET_MEM, config_len>>4, TID_2);
+	status = DataToAccelDone(slot);
+	if (!status)
+		die("DataToAccelDone(%d)", slot);
+	printf("Configure FFT Ch1 done.\n");
+
+	DataToAccel(slot, CONFIG_OFFSET_MEM, config_len>>4, TID_3);
+	status = DataToAccelDone(slot);
+	if (!status)
+		die("DataToAccelDone(%d)", slot);
+	printf("Configure FFT Ch2 done.\n");
+
+	DataToAccel(slot, CONFIG_OFFSET_MEM, config_len>>4, TID_4);
+	status = DataToAccelDone(slot);
+	if (!status)
+		die("DataToAccelDone(%d)", slot);
+	printf("Configure FFT Ch3 done.\n");
 	
 	//Config FFT Data In
  	//Config S2MM data
